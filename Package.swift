@@ -3,20 +3,6 @@
 
 import PackageDescription
 
-//let package = Package(
-//  name: "Version",
-//  targets: [
-//    Target.target(
-//      name: <#T##String#>,
-//                  dependencies: <#T##[Target.Dependency]#>,
-//                  path: "Version",
-//                  exclude: <#T##[String]#>, sources: <#T##[String]?#>, publicHeadersPath: <#T##String?#>, cSettings: <#T##[CSetting]?#>, cxxSettings: <#T##[CXXSetting]?#>, swiftSettings: <#T##[SwiftSetting]?#>, linkerSettings: <#T##[LinkerSetting]?#>)
-//  ],
-//  swiftLanguageVersions: <#T##[SwiftVersion]?#>,
-//  cLanguageStandard: <#T##CLanguageStandard?#>,
-//  cxxLanguageStandard: <#T##CXXLanguageStandard?#>
-//)
-
 let package = Package(
     name: "SimulatorControl",
     products: [
@@ -27,7 +13,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-      .package(url: "https://github.com/mackoj/Version.git", .branch( "master")),
+      .package(url: "https://github.com/mackoj/Version.git", from: "0.7.2"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.

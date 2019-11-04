@@ -5,9 +5,9 @@
         "package": "Version",
         "repositoryURL": "https://github.com/mackoj/Version.git",
         "state": {
-          "branch": "master",
-          "revision": "e1748fc74e2553fcd184a55b149a8bf2fad266eb",
-          "version": null
+          "branch": null,
+          "revision": "16ba00e8d8fe351a3f239f00beb4c65be6ea1b0f",
+          "version": "0.7.2"
         }
       }
     ]
