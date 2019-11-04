@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Version",
+        "repositoryURL": "https://github.com/mackoj/Version.git",
+        "state": {
+          "branch": "master",
+          "revision": "e1748fc74e2553fcd184a55b149a8bf2fad266eb",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
