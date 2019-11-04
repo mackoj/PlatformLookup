@@ -7,12 +7,12 @@
 
 import Foundation
 
-final class SimulatorControlManager {
+public final class SimulatorControlManager {
   
   let simctl : SimulatorControl
   private static var shared : SimulatorControlManager? = nil
 
-  init?(_ data: Data) {
+  private init?(_ data: Data) {
     do {
       simctl = try JSONDecoder().decode(SimulatorControl.self, from: data)
     } catch {
