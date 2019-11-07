@@ -41,7 +41,7 @@ public final class SimulatorControlManager {
     let devices = simctl.devices?[identifier]!
     let iPhones = devices?.filter(filterDeviceThatAreIphoneAndAvailable)
     if let finalDevice = iPhones?.last, let version = runtimesSorted?.first?.version {
-      return "platform=iOS Simulator,name=\(finalDevice.name),OS=\(version)"
+      return "platform=\"iOS Simulator,name=\(finalDevice.name),OS=\(version)\""
     }
     return nil
   }
