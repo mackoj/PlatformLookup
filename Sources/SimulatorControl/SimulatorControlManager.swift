@@ -7,11 +7,6 @@
 
 import Foundation
 
-public struct Platform : Equatable {
-  let device: Device
-  let runtime: Runtime
-}
-
 public final class SimulatorControlManager {
   
   public typealias DeviceFilter = (_ device : Device) -> Bool
@@ -25,24 +20,6 @@ public final class SimulatorControlManager {
       print(error)
       return nil
     }
-  }
-  
-  static public func instanciate(_ data: Data) {
-    SimulatorControlManager.shared = SimulatorControlManager(data)
-  }
-  
-  static public func getPlatform(_ deviceFilter : DeviceFilter = filterDeviceThatAreIphoneAndAvailable) -> String? {
-    return SimulatorControlManager.shared?._getPlatform(deviceFilter)
-  }
-
-  static public func getPlatform(_ deviceFilter : DeviceFilter = filterDeviceThatAreIphoneAndAvailable) -> Platform? {
-    return SimulatorControlManager.shared?._getPlatform(deviceFilter)
-  }
-
-  static public func filterDeviceThatAreIphoneAndAvailable(_ device : Device) -> Bool {
-    let isIphone = device.name.contains("iPhone")
-    let isAvailable = device.isAvailable ?? false
-    return (isIphone && isAvailable)
   }
   
   private func _getPlatform(_ deviceFilter : DeviceFilter) -> String? {
@@ -66,5 +43,41 @@ public final class SimulatorControlManager {
       return Platform(device: finalDevice, runtime: runtime)
     }
     return nil
+  }
+  
+  /// <#Description#>
+  /// - Parameter data: <#data description#>
+  static public func instanciate(_ data: Data) {
+    SimulatorControlManager.shared = SimulatorControlManager(data)
+  }
+  
+  
+  /// platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.2\"
+  /// - Parameter deviceFilter: <#deviceFilter description#>
+  static public func platform(_ deviceFilter : DeviceFilter = filteriPhone) -> String? {
+    return SimulatorControlManager.shared?._getPlatform(deviceFilter)
+  }
+
+  
+  /// <#Description#>
+  /// - Parameter deviceFilter: <#deviceFilter description#>
+  static public func getPlatform(_ deviceFilter : DeviceFilter = filteriPhone) -> Platform? {
+    return SimulatorControlManager.shared?._getPlatform(deviceFilter)
+  }
+
+  /// <#Description#>
+  /// - Parameter device: <#device description#>
+  static public func filteriPhone(_ device : Device) -> Bool {
+    let isIphone = device.name.contains("iPhone")
+    let isAvailable = device.isAvailable ?? false
+    return (isIphone && isAvailable)
+  }
+
+  /// <#Description#>
+  /// - Parameter device: <#device description#>
+  static public func filteriPad(_ device : Device) -> Bool {
+    let isIphone = device.name.contains("iPad")
+    let isAvailable = device.isAvailable ?? false
+    return (isIphone && isAvailable)
   }
 }
