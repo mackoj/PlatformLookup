@@ -41,14 +41,38 @@ final class SimulatorControlTests: XCTestCase {
     }
   }
   
-  func testPlatform() {
+  func testPlatformString() {
     SimulatorControlManager.instanciate(SimulatorControlJSONData)
-    let platform = SimulatorControlManager.getPlatform()
-    XCTAssert(platform == "platform=iOS Simulator,name=iPhone 11 Pro Max,OS=13.2")
+    let platform : String? = SimulatorControlManager.getPlatform()
+    XCTAssert(platform == "platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.2\"")
+  }
+  
+  func testPlatformPlatform() {
+    SimulatorControlManager.instanciate(SimulatorControlJSONData)
+    let platform : Platform? = SimulatorControlManager.getPlatform()
+    
+    let device = Device(
+      state: "Shutdown",
+      isAvailable: true,
+      name: "iPhone 11 Pro Max",
+      udid: "B0184528-5026-4FAC-9EBC-67597183CF84",
+      availabilityError: nil
+    )
+    let runtime = Runtime(
+      version: "13.2",
+      bundlePath: "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime",
+      isAvailable: true,
+      name: "iOS 13.2",
+      identifier: "com.apple.CoreSimulator.SimRuntime.iOS-13-2",
+      buildversion: "17B84"
+    )
+    
+    XCTAssert(platform == Platform(device: device, runtime: runtime))
   }
   
   static var allTests = [
     ("testSerialisation", testSerialisation),
-    ("testPlatform", testPlatform),
+    ("testPlatformString", testPlatformString),
+    ("testPlatformPlatform", testPlatformPlatform),
   ]
 }
