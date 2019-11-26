@@ -7,8 +7,14 @@
 
 import Foundation
 
+public struct Platform {
+  let device: Device
+  let runtime: Runtime
+}
+
 public final class SimulatorControlManager {
   
+  typealias DeviceFilter = (_ device : Device) -> Bool
   let simctl : SimulatorControl
   private static var shared : SimulatorControlManager? = nil
 
@@ -36,12 +42,22 @@ public final class SimulatorControlManager {
   }
   
   private func getPlatform() -> String? {
+    if let platform : Platform = getPlatform(filterDeviceThatAreIphoneAndAvailable) {
+      return "platform=\"iOS Simulator,name=\(platform.device.name),OS=\(platform.runtime.version)\""
+    }
+    return nil
+  }
+  
+  private func getPlatform(_ deviceFilter : DeviceFilter) -> Platform? {
     let runtimesSorted = simctl.runtimes?.sorted(by: >)
-    guard let identifier = runtimesSorted?.first?.identifier else { return nil }
-    let devices = simctl.devices?[identifier]!
-    let iPhones = devices?.filter(filterDeviceThatAreIphoneAndAvailable)
-    if let finalDevice = iPhones?.last, let version = runtimesSorted?.first?.version {
-      return "platform=\"iOS Simulator,name=\(finalDevice.name),OS=\(version)\""
+    guard
+      let runtime = runtimesSorted?.first,
+      let devices = simctl.devices?[runtime.identifier]
+      else { return nil }
+
+    let filteredDevice = devices.filter(deviceFilter)
+    if let finalDevice = filteredDevice.last {
+      return Platform(device: finalDevice, runtime: runtime)
     }
     return nil
   }
