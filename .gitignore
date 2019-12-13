@@ -3,3 +3,4 @@
 /Packages
 /*.xcodeproj
 xcuserdata/
+xcrun_simctl_list.json
