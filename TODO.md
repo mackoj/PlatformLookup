@@ -2,6 +2,7 @@
 
 ## P0
 - [ ] Add missing tests
+- [ ] Remove all the warnings
 
 ## P1
 - [ ] Code Documentation
@@ -11,5 +12,5 @@
 ## P2
 - [ ] Code of conduct
 - [ ] PR Boiler plate
-- [ ] Auto review ?
+- [ ] Auto review
 - [ ] Dr String
