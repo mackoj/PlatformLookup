@@ -7,6 +7,9 @@ build:
 reformat:
 	swift-format -m format --configuration .swift-format -r -i Sources
 
+lint:
+	swift-format -m lint --configuration .swift-format -r -i Sources
+
 gitignore-flush:
 	git rm -r --cached .
 	git add .

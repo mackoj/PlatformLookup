@@ -66,9 +66,7 @@ extension PlatformLookup {
     -> String?
   {
     if let platform = try getAllDevices(with: deviceFilter, runtimeFilter: runtimeFilter).last {
-      return """
-        platform="iOS Simulator,name=\(platform.devices.last!.name),OS=\(platform.runtime.version)"
-        """
+      return "iOS Simulator,name=\(platform.devices.last!.name),OS=\(platform.runtime.version)"
     }
     return nil
   }

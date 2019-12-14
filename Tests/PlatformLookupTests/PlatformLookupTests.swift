@@ -41,7 +41,7 @@ final class PlatformLookupTests: XCTestCase {
   }
   func test_findADeviceForLastOSVersion_string() {
     let platform: String? = try? PlatformLookup.findADeviceForLastOSVersion()
-    XCTAssertEqual(platform, "platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.2\"")
+    XCTAssertEqual(platform, "iOS Simulator,name=iPhone 11 Pro Max,OS=13.2")
   }
   func test_findADeviceForLastOSVersion_platform() {
     let platform: Platform? = try? PlatformLookup.findADeviceForLastOSVersion()

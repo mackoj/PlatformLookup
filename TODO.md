@@ -1,9 +1,15 @@
 # TODO
 
+## P0
+- [ ] Add missing tests
+
+## P1
 - [ ] Code Documentation
 - [ ] Project Documentation
-- [ ] Dr String
-- [ ] Developer Jouney
+- [ ] Developer Jouney (comment participer au projet)
+
+## P2
 - [ ] Code of conduct
 - [ ] PR Boiler plate
 - [ ] Auto review ?
+- [ ] Dr String
