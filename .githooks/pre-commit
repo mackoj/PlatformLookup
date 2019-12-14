@@ -14,12 +14,12 @@ elif ! [ -x "$(command -v swift-format)" ]; then
   ln -s /Applications/Xcode.app/Contents/Developer/usr/bin/swift-format /usr/local/bin/swift-format
   cp .build/release/generate-pipeline /Applications/Xcode.app/Contents/Developer/usr/bin
   ln -s /Applications/Xcode.app/Contents/Developer/usr/bin/generate-pipeline /usr/local/bin/generate-pipeline
-# else
-  # echo "Linting..."
-  # git diff --diff-filter=d --cached --name-only | grep -E '\.(swift)$' | xargs -I{} swift-format -m lint --configuration .swift-format {}
-  # echo "Auto-Formatting..."
-  # git diff --diff-filter=d --cached --name-only | grep -E '\.(swift)$' | xargs -I{} swift-format -m format -r --configuration .swift-format -i {}
-  # echo "You might need to re-commit to commit the updated formmated code"
+else
+  echo "Linting..."
+  git diff --diff-filter=d --cached --name-only | grep -E '\.(swift)$' | xargs -I{} swift-format -m lint --configuration .swift-format {}
+  echo "Auto-Formatting..."
+  git diff --diff-filter=d --cached --name-only | grep -E '\.(swift)$' | xargs -I{} swift-format -m format -r --configuration .swift-format -i {}
+  echo "You might need to re-commit to commit the updated formmated code"
 fi
 
 #
