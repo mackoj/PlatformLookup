@@ -7,24 +7,17 @@ let package = Package(
   name: "PlatformLookup",
   platforms: [.macOS(.v10_14)],
   products: [
-    .library(
-      name: "SimulatorControl",
-      targets: ["SimulatorControl"]),
-    .library(
-      name: "Shell",
-      targets: ["Shell"]),
-    .library(
-      name: "PlatformLookup",
-      targets: ["PlatformLookup"]),
+    .library(name: "SimulatorControl", targets: ["SimulatorControl"]),
+    .library(name: "Shell", targets: ["Shell"]),
+    .library(name: "PlatformLookup", targets: ["PlatformLookup"]),
   ],
   dependencies: [
     .package(url: "https://github.com/mrackwitz/Version.git", from: "0.7.2"),
-    .package(url: "https://github.com/pointfreeco/swift-snapshot-testing.git", from: "1.7.0")
+    .package(url: "https://github.com/pointfreeco/swift-snapshot-testing.git", from: "1.7.0"),
   ],
   targets: [
     .target(name: "PlatformLookup", dependencies: ["SimulatorControl", "Shell"]),
-    .target(name: "Shell"),
-    .target(name: "SimulatorControl", dependencies: ["Version"]),
+    .target(name: "Shell"), .target(name: "SimulatorControl", dependencies: ["Version"]),
     .testTarget(name: "PlatformLookupTests", dependencies: ["PlatformLookup", "SnapshotTesting"]),
     .testTarget(name: "SimulatorControlTests", dependencies: ["SimulatorControl"]),
     .testTarget(name: "ShellTests", dependencies: ["Shell", "SnapshotTesting"]),

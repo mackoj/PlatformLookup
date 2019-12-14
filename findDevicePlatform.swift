@@ -1,5 +1,3 @@
-#!/usr/bin/swift sh
-
 import Foundation
 import PlatformLookup  // mackoj/SimulatorControl
 
