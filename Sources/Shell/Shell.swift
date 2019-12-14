@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Jeffrey Macko on 14/12/2019.
-//
-
 import Foundation
 
 public enum ShellError: Error {
