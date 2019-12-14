@@ -6,7 +6,7 @@ public struct SimulatorControl: Equatable, Codable {
   public let runtimes: [Runtime]?
   public let devices: [String: [Device]]?
   public let pairs: [String: Pair]?
-  
+
   public init(
     devicetypes: [Devicetype]?,
     runtimes: [Runtime]?,

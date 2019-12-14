@@ -7,7 +7,7 @@ public struct Device: Equatable, Codable {
   public let name: String
   public let udid: String
   public let availabilityError: String?
-  
+
   public init(
     state: String,
     isAvailable: Bool?,
