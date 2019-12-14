@@ -4,6 +4,9 @@ init:
 build:
 	swift build
 
+reformat:
+	swift-format -m format --configuration .swift-format -r -i Sources
+
 test-swift:
 	swift test
 

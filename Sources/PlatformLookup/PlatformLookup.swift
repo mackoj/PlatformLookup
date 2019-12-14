@@ -3,9 +3,7 @@ import Shell
 import SimulatorControl
 
 public final class PlatformLookup {
-  public enum PlatformLookupError: Error {
-    case failedToInitializeDataIsNotValid
-  }
+  public enum PlatformLookupError: Error { case failedToInitializeDataIsNotValid }
 
   public typealias DeviceFilter = (_ device: Device) -> Bool
   public typealias RuntimeFilter = (_ device: Runtime) -> Bool

@@ -10,7 +10,8 @@ extension PlatformLookup {
   {
     return PlatformLookup.shared?.getPlatform(
       with: filterDeviceFamily(deviceFamily),
-      runtimeFilter: filterRuntime(deviceFamily.os, version: nil))
+      runtimeFilter: filterRuntime(deviceFamily.os, version: nil)
+    )
   }
 
   /// Trouve un device pour la derniere version de l'OS par default cherche un iPhone
@@ -20,17 +21,20 @@ extension PlatformLookup {
   {
     return PlatformLookup.shared?.getPlatform(
       with: filterDeviceFamily(deviceFamily),
-      runtimeFilter: filterRuntime(deviceFamily.os, version: nil))
+      runtimeFilter: filterRuntime(deviceFamily.os, version: nil)
+    )
   }
 
   /// Trouve tous les devices pour une version d'os
   /// - Parameter deviceFilter: <#deviceFilter description#>
   static public func findAllDevicesForAnOSVersion(
-    _ deviceFamily: DeviceFamily, version: String? = nil
+    _ deviceFamily: DeviceFamily,
+    version: String? = nil
   ) -> [Platform] {
     return PlatformLookup.shared?.getAllDevices(
       with: filterDeviceFamily(deviceFamily),
-      runtimeFilter: filterRuntime(deviceFamily.os, version: version)) ?? []
+      runtimeFilter: filterRuntime(deviceFamily.os, version: version)
+    ) ?? []
   }
 
   /// Trouve tous les devices pour une version d'os
@@ -59,9 +63,7 @@ extension PlatformLookup {
 
   private func getPlatform(with deviceFilter: DeviceFilter, runtimeFilter: RuntimeFilter)
     -> Platform?
-  {
-    return getAllDevices(with: deviceFilter, runtimeFilter: runtimeFilter).last
-  }
+  { return getAllDevices(with: deviceFilter, runtimeFilter: runtimeFilter).last }
 
   private func getAllDevices(with deviceFilter: DeviceFilter, runtimeFilter: RuntimeFilter)
     -> [Platform]
