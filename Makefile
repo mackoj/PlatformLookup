@@ -22,7 +22,7 @@ test-macos:
 	swift package generate-xcodeproj
 	set -o pipefail && \
 	xcodebuild test \
-		-scheme SimulatorControl-Package \
+		-scheme PlatformLookup-Package \
 		-destination platform="macOS" \
 
 test-all: test-swift test-macos
