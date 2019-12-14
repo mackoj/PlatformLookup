@@ -7,10 +7,10 @@
   },
   "indentConditionalCompilationBlocks" : true,
   "lineBreakBeforeControlFlowKeywords" : false,
-  "lineBreakBeforeEachArgument" : false,
+  "lineBreakBeforeEachArgument" : true,
   "lineLength" : 100,
   "maximumBlankLines" : 1,
-  "respectsExistingLineBreaks" : true,
+  "respectsExistingLineBreaks" : false,
   "rules" : {
     "AllPublicDeclarationsHaveDocumentation" : true,
     "AlwaysUseLowerCamelCase" : true,

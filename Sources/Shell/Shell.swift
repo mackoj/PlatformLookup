@@ -1,8 +1,6 @@
 import Foundation
 
-public enum ShellError: Error {
-  case pipeOutputFailedToDecode
-}
+public enum ShellError: Error { case pipeOutputFailedToDecode }
 
 public func shell(_ command: String) throws -> String {
   let task = Process()

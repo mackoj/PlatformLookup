@@ -37,8 +37,4 @@ extension Runtime: Comparable {
   }
 }
 
-extension Runtime {
-  var convertedVersion: Version {
-    Version(version)!
-  }
-}
+extension Runtime { var convertedVersion: Version { Version(version)! } }
