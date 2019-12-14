@@ -4,7 +4,7 @@ import SimulatorControl
 
 final class PlatformLookupTests: XCTestCase {
   override func setUp() {
-    PlatformLookup.instanciate(SimulatorControlJSONData)
+    try? PlatformLookup.instanciate(SimulatorControlJSONData)
   }
   
   func test_decodeXcrunSimctlJSONData() {
