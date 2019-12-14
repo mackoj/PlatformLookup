@@ -2,14 +2,14 @@ import Foundation
 import Version
 
 // MARK: - Runtime
-public struct Runtime: Equatable, Codable {  
+public struct Runtime: Equatable, Codable {
   public let version: String
   public let bundlePath: String
   public let isAvailable: Bool
   public let name: String
   public let identifier: String
   public let buildversion: String
-  
+
   public init(
     version: String,
     bundlePath: String,
@@ -27,18 +27,18 @@ public struct Runtime: Equatable, Codable {
   }
 }
 
-extension Runtime : Comparable {
+extension Runtime: Comparable {
   public static func < (lhs: Runtime, rhs: Runtime) -> Bool {
     return lhs.convertedVersion < rhs.convertedVersion
   }
-  
+
   public static func > (lhs: Runtime, rhs: Runtime) -> Bool {
     return lhs.convertedVersion > rhs.convertedVersion
   }
 }
 
-extension Runtime  {
-  var convertedVersion : Version {
-    get { Version(version)! }
+extension Runtime {
+  var convertedVersion: Version {
+    Version(version)!
   }
 }

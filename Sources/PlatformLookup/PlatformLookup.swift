@@ -1,16 +1,16 @@
 import Foundation
-import SimulatorControl
 import Shell
+import SimulatorControl
 
 public final class PlatformLookup {
-  public enum PlatformLookupError : Error {
+  public enum PlatformLookupError: Error {
     case failedToInitializeDataIsNotValid
   }
-  
-  public typealias DeviceFilter = (_ device : Device) -> Bool
-  public typealias RuntimeFilter = (_ device : Runtime) -> Bool
+
+  public typealias DeviceFilter = (_ device: Device) -> Bool
+  public typealias RuntimeFilter = (_ device: Runtime) -> Bool
   static var shared = try? instanciate()
-  let simctl : SimulatorControl
+  let simctl: SimulatorControl
 
   static internal func instanciate(_ data: Data) throws {
     PlatformLookup.shared = try PlatformLookup(data)
@@ -22,8 +22,8 @@ public final class PlatformLookup {
   }
 
   private init(_ data: Data?) throws {
-    guard let data = data else { throw(PlatformLookupError.failedToInitializeDataIsNotValid) }
-    
+    guard let data = data else { throw (PlatformLookupError.failedToInitializeDataIsNotValid) }
+
     simctl = try JSONDecoder().decode(SimulatorControl.self, from: data)
   }
 }

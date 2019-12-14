@@ -5,7 +5,7 @@ public struct Pair: Equatable, Codable {
   public let watch: Device?
   public let phone: Device?
   public let state: String?
-  
+
   public init(
     watch: Device?,
     phone: Device?,
