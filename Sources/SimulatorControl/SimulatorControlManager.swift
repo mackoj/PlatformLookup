@@ -8,8 +8,26 @@
 import Foundation
 
 public final class SimulatorControlManager {
-  
+
+  public enum DeviceFamily : String, CaseIterable {
+    case iPhone = "iPhone"
+    case iPad = "iPad"
+    case appleTV = "Apple TV"
+    case appleWatch = "Apple Watch"
+    
+    var os : String {
+      get {
+        switch self {
+        case .iPhone, .iPad: return "iOS"
+        case .appleTV: return "tvOS"
+        case .appleWatch: return "watchOS"
+        }
+      }
+    }
+  }
+
   public typealias DeviceFilter = (_ device : Device) -> Bool
+  public typealias RuntimeFilter = (_ device : Runtime) -> Bool
   let simctl : SimulatorControl
   private static var shared : SimulatorControlManager? = nil
   
@@ -22,27 +40,29 @@ public final class SimulatorControlManager {
     }
   }
   
-  private func _getPlatform(_ deviceFilter : DeviceFilter) -> String? {
-    if let platform : Platform = _getPlatform(deviceFilter) {
+  private func _getPlatform(deviceFilter : DeviceFilter, runtimeFilter: RuntimeFilter) -> String? {
+    if let platform = _getAllPlatform(deviceFilter, runtimeFilter: runtimeFilter).last {
       return """
-      platform="iOS Simulator,name=\(platform.device.name),OS=\(platform.runtime.version)"
+      platform="iOS Simulator,name=\(platform.devices.last!.name),OS=\(platform.runtime.version)"
       """
     }
     return nil
   }
   
-  private func _getPlatform(_ deviceFilter : DeviceFilter) -> Platform? {
-    let runtimesSorted = simctl.runtimes?.sorted(by: >)
-    guard
-      let runtime = runtimesSorted?.first,
-      let devices = simctl.devices?[runtime.identifier]
-      else { return nil }
-    
-    let filteredDevice = devices.filter(deviceFilter)
-    if let finalDevice = filteredDevice.last {
-      return Platform(device: finalDevice, runtime: runtime)
+  private func _getPlatform(_ deviceFilter : DeviceFilter, runtimeFilter: RuntimeFilter) -> Platform? {
+    return _getAllPlatform(deviceFilter, runtimeFilter: runtimeFilter).last
+  }
+  
+  private func _getAllPlatform(_ deviceFilter : DeviceFilter, runtimeFilter: RuntimeFilter) -> [Platform] {
+    guard let filteredRuntimes = simctl.runtimes?.filter(runtimeFilter) else { print("No runtime found"); return []; }
+    let sortedRuntimes = filteredRuntimes.sorted(by: <)
+
+    return sortedRuntimes.compactMap { (runtime) -> Platform? in
+      let devices = simctl.devices?[runtime.identifier] ?? []
+      let filteredDevices = devices.filter(deviceFilter)
+      guard filteredDevices.count > 0 else { return nil }
+      return Platform(runtime: runtime, devices: filteredDevices)
     }
-    return nil
   }
   
   /// <#Description#>
@@ -51,33 +71,66 @@ public final class SimulatorControlManager {
     SimulatorControlManager.shared = SimulatorControlManager(data)
   }
   
+  // MARK: Get Platform
   
+  /// Last iPhone on Last os
   /// platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.2\"
   /// - Parameter deviceFilter: <#deviceFilter description#>
-  static public func platform(_ deviceFilter : DeviceFilter = filteriPhone) -> String? {
-    return SimulatorControlManager.shared?._getPlatform(deviceFilter)
+  static public func platform(_ deviceFamily : DeviceFamily = .iPhone) -> String? {
+    return SimulatorControlManager.shared?._getPlatform(deviceFilter: filterDeviceFamily(deviceFamily), runtimeFilter: filterRuntime(deviceFamily.os, version: nil))
   }
 
-  
   /// <#Description#>
   /// - Parameter deviceFilter: <#deviceFilter description#>
-  static public func getPlatform(_ deviceFilter : DeviceFilter = filteriPhone) -> Platform? {
-    return SimulatorControlManager.shared?._getPlatform(deviceFilter)
+  static public func getMostRecentPlatform(_ deviceFamily : DeviceFamily = .iPhone) -> Platform? {
+    return SimulatorControlManager.shared?._getPlatform(filterDeviceFamily(deviceFamily), runtimeFilter: filterRuntime(deviceFamily.os, version: nil))
+  }
+
+  /// <#Description#>
+  /// - Parameter deviceFilter: <#deviceFilter description#>
+  static public func getAllPlatform(_ deviceFamily : DeviceFamily, version : String? = nil) -> [Platform] {
+    return SimulatorControlManager.shared?._getAllPlatform(filterDeviceFamily(deviceFamily), runtimeFilter: filterRuntime(deviceFamily.os, version: version)) ?? []
+  }
+
+  /// <#Description#>
+  /// - Parameter deviceFilter: <#deviceFilter description#>
+  static public func getAllPlatform(deviceName : String, version : String? = nil) -> [Platform] {
+    guard let deviceFamily = DeviceFamily(rawValue: deviceName) else {
+      print("Device name unknown")
+      return []
+    }
+    return SimulatorControlManager.getAllPlatform(deviceFamily, version: version)
+  }
+  
+  // MARK: Runtime Filter
+  static public func filterRuntime(_ name : String, version : String? = nil) -> ((Runtime) -> Bool) {
+    return { runtime in
+      let f1 = runtime.name.contains(name)
+      guard let version = version else { return f1 }
+      return f1 && runtime.version.contains(version)
+    }
+  }
+  
+  // MARK: Device Filter
+  /// <#Description#>
+  /// - Parameter device: <#device description#>
+  static public func filterDeviceName(_ deviceName : String) -> ((Device) -> Bool) {
+    return { $0.name.contains(deviceName) }
+  }
+
+  /// <#Description#>
+  /// - Parameter device: <#device description#>
+  static public func filterDeviceFamily(_ deviceFamily : DeviceFamily, isAvailable : Bool? = nil) -> ((Device) -> Bool) {
+    return { device in
+      let containExpectedDevice = device.name.contains(deviceFamily.rawValue)
+      guard let isAvailable = isAvailable else { return containExpectedDevice }
+      return (containExpectedDevice && isAvailable)
+    }
   }
 
   /// <#Description#>
   /// - Parameter device: <#device description#>
   static public func filteriPhone(_ device : Device) -> Bool {
-    let isIphone = device.name.contains("iPhone")
-    let isAvailable = device.isAvailable ?? false
-    return (isIphone && isAvailable)
-  }
-
-  /// <#Description#>
-  /// - Parameter device: <#device description#>
-  static public func filteriPad(_ device : Device) -> Bool {
-    let isIphone = device.name.contains("iPad")
-    let isAvailable = device.isAvailable ?? false
-    return (isIphone && isAvailable)
+    return filterDeviceFamily(.iPhone, isAvailable: true)(device)
   }
 }

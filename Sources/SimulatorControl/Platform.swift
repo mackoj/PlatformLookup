@@ -8,6 +8,16 @@
 import Foundation
 
 public struct Platform : Equatable, Codable {
-  let device: Device
+  let devices: [Device]
   let runtime: Runtime
+  
+  init(runtime: Runtime, device : Device) {
+    self.devices = [device]
+    self.runtime = runtime
+  }
+
+  init(runtime: Runtime, devices : [Device]) {
+    self.devices = devices
+    self.runtime = runtime
+  }
 }

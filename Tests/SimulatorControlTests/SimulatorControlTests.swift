@@ -2,7 +2,7 @@ import XCTest
 @testable import SimulatorControl
 
 final class SimulatorControlTests: XCTestCase {
-  func testSerialisation() {
+  func test_decodeXcrunSimctlJSONData() {
     do {
       let simctl = try JSONDecoder().decode(SimulatorControl.self, from: SimulatorControlJSONData)
       let runtimesSorted = simctl.runtimes?.sorted(by: >)
@@ -15,7 +15,7 @@ final class SimulatorControlTests: XCTestCase {
           identifier: "com.apple.CoreSimulator.SimRuntime.iOS-13-2",
           buildversion: "17B84"
         )
-        XCTAssert(firstRuntime == testRuntime)
+        XCTAssertEqual(firstRuntime, testRuntime)
         
         let identifier = firstRuntime.identifier
         let devices = simctl.devices?[identifier]!
@@ -33,7 +33,7 @@ final class SimulatorControlTests: XCTestCase {
           availabilityError: nil
         )
         let finalDevice = iPhones!.first!
-        XCTAssert(finalDevice == testDevice)
+        XCTAssertEqual(finalDevice, testDevice)
         
       }
     } catch {
@@ -41,15 +41,15 @@ final class SimulatorControlTests: XCTestCase {
     }
   }
   
-  func testPlatformString() {
+  func test_platform() {
     SimulatorControlManager.instanciate(SimulatorControlJSONData)
-    let platform : String? = SimulatorControlManager.getPlatform()
-    XCTAssert(platform == "platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.2\"")
+    let platform : String? = SimulatorControlManager.platform()
+    XCTAssertEqual(platform, "platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.2\"")
   }
   
-  func testPlatformiPhone() {
+  func test_getMostRecentPlatform() {
     SimulatorControlManager.instanciate(SimulatorControlJSONData)
-    let platform : Platform? = SimulatorControlManager.getPlatform()
+    let platform : Platform? = SimulatorControlManager.getMostRecentPlatform()
     
     let device = Device(
       state: "Shutdown",
@@ -67,25 +67,21 @@ final class SimulatorControlTests: XCTestCase {
       buildversion: "17B84"
     )
     
-    XCTAssert(platform == Platform(device: device, runtime: runtime))
+    XCTAssertEqual(platform?.runtime, runtime)
+    XCTAssertEqual(platform?.devices.last, device)
   }
-
-  func testPlatformiPad() {
+  
+  func test_getMostRecentPlatform_allCases() {
     SimulatorControlManager.instanciate(SimulatorControlJSONData)
-    let platform : Platform? = SimulatorControlManager.getPlatform { (device : Device) -> Bool in
-      let isIphone = device.name.contains("iPad")
-      let isAvailable = device.isAvailable ?? false
-      return (isIphone && isAvailable)
-    }
     
-    let device = Device(
+    var device = Device(
       state: "Shutdown",
       isAvailable: true,
-      name: "iPad Air (3rd generation)",
-      udid: "7AD860C2-D789-4564-B515-93425EDD0EDB",
+      name: "iPhone 11 Pro Max",
+      udid: "B0184528-5026-4FAC-9EBC-67597183CF84",
       availabilityError: nil
     )
-    let runtime = Runtime(
+    var runtime = Runtime(
       version: "13.2",
       bundlePath: "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime",
       isAvailable: true,
@@ -93,13 +89,73 @@ final class SimulatorControlTests: XCTestCase {
       identifier: "com.apple.CoreSimulator.SimRuntime.iOS-13-2",
       buildversion: "17B84"
     )
-    
-    XCTAssert(platform == Platform(device: device, runtime: runtime))
-  }
+    let p1 = Platform(runtime: runtime, device: device)
 
+    device = Device(
+      state: "Shutdown",
+      isAvailable: true,
+      name: "iPad Air (3rd generation)",
+      udid: "7AD860C2-D789-4564-B515-93425EDD0EDB",
+      availabilityError: nil
+    )
+    runtime = Runtime(
+      version: "13.2",
+      bundlePath: "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime",
+      isAvailable: true,
+      name: "iOS 13.2",
+      identifier: "com.apple.CoreSimulator.SimRuntime.iOS-13-2",
+      buildversion: "17B84"
+    )
+    let p2 = Platform(runtime: runtime, device: device)
+        
+    device = Device(
+      state: "Shutdown",
+      isAvailable: true,
+      name: "Apple TV 4K (at 1080p)",
+      udid: "76998A1E-F5F5-4F63-B86C-805C25C7C5DB",
+      availabilityError: nil
+    )
+        
+    runtime = Runtime(
+      version: "13.2",
+      bundlePath: "/Applications/Xcode.app/Contents/Developer/Platforms/AppleTVOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/tvOS.simruntime",
+      isAvailable: true,
+      name: "tvOS 13.2",
+      identifier: "com.apple.CoreSimulator.SimRuntime.tvOS-13-2",
+      buildversion: "17K81"
+    )
+    let p3 = Platform(runtime: runtime, device: device)
+
+    device = Device(
+      state: "Shutdown",
+      isAvailable: true,
+      name: "Apple Watch Series 5 - 44mm",
+      udid: "C69C4207-D98A-4372-BB4D-F08708C50921",
+      availabilityError: nil
+    )
+    runtime = Runtime(
+      version: "6.1",
+      bundlePath: "/Applications/Xcode.app/Contents/Developer/Platforms/WatchOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/watchOS.simruntime",
+      isAvailable: true,
+      name: "watchOS 6.1",
+      identifier: "com.apple.CoreSimulator.SimRuntime.watchOS-6-1",
+      buildversion: "17S83"
+    )
+    let p4 = Platform(runtime: runtime, device: device)
+
+    for (expectedPlatform, aCase) in zip([p1, p2, p3, p4],  SimulatorControlManager.DeviceFamily.allCases) {
+      let platform : Platform? = SimulatorControlManager.getMostRecentPlatform(aCase)
+      XCTAssertEqual(platform?.runtime, expectedPlatform.runtime)
+      XCTAssertEqual(platform?.devices.last, expectedPlatform.devices.last)
+    }
+  }
+  
+  
+  
   static var allTests = [
-    ("testSerialisation", testSerialisation),
-    ("testPlatformString", testPlatformString),
-    ("testPlatformiPhone", testPlatformiPhone),
+    ("test_decodeXcrunSimctlJSONData", test_decodeXcrunSimctlJSONData),
+    ("test_platform", test_platform),
+    ("test_getMostRecentPlatform", test_getMostRecentPlatform),
+    ("test_getMostRecentPlatform_allCases", test_getMostRecentPlatform_allCases),
   ]
 }
