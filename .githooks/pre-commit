@@ -15,7 +15,10 @@ elif ! [ -x "$(command -v swift-format)" ]; then
   cp .build/release/generate-pipeline /Applications/Xcode.app/Contents/Developer/usr/bin
   ln -s /Applications/Xcode.app/Contents/Developer/usr/bin/generate-pipeline /usr/local/bin/generate-pipeline
 else
-  git diff --diff-filter=d --cached --name-only | grep -E '\.(swift)$' | xargs -I{} swift-format -m format -r --configuration .swift-format -i {}	
+  echo "Linting..."
+  git diff --diff-filter=d --cached --name-only | grep -E '\.(swift)$' | xargs -I{} swift-format -m lint --configuration .swift-format -i {}
+  echo "Auto-Formatting..."
+  git diff --diff-filter=d --cached --name-only | grep -E '\.(swift)$' | xargs -I{} swift-format -m format -r --configuration .swift-format -i {}
 fi
 
 #

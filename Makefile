@@ -4,7 +4,7 @@ init:
 build:
 	swift build
 
-reformat:
+format:
 	swift-format -m format --configuration .swift-format -r -i Sources
 
 lint:
