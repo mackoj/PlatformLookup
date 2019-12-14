@@ -1,7 +1,7 @@
 import Foundation
 import Version
 
-// MARK: - Runtime
+/// <#Description#>
 public struct Runtime: Equatable, Codable {
   public let version: String
   public let bundlePath: String
@@ -10,6 +10,14 @@ public struct Runtime: Equatable, Codable {
   public let identifier: String
   public let buildversion: String
 
+  /// <#Description#>
+  /// - Parameters:
+  ///   - version: <#version description#>
+  ///   - bundlePath: <#bundlePath description#>
+  ///   - isAvailable: <#isAvailable description#>
+  ///   - name: <#name description#>
+  ///   - identifier: <#identifier description#>
+  ///   - buildversion: <#buildversion description#>
   public init(
     version: String,
     bundlePath: String,
@@ -26,6 +34,8 @@ public struct Runtime: Equatable, Codable {
     self.buildversion = buildversion
   }
 }
+
+// MARK: - Comparable Support
 
 extension Runtime: Comparable {
   public static func < (lhs: Runtime, rhs: Runtime) -> Bool {

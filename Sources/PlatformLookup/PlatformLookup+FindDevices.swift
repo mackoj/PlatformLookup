@@ -1,11 +1,12 @@
 import Foundation
 
 extension PlatformLookup {
-  // MARK: Find Devices
+  // MARK: - Find Devices
 
   /// Trouve un device pour la derniere version de l'OS par default cherche un iPhone
   /// platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.2\"
-  /// - Parameter deviceFilter: <#deviceFilter description#>
+  /// <#Description#>
+  /// - Parameter deviceFamily: <#deviceFamily description#>
   static public func findADeviceForLastOSVersion(_ deviceFamily: DeviceFamily = .iPhone) -> String?
   {
     return PlatformLookup.shared?.getPlatform(
@@ -15,7 +16,8 @@ extension PlatformLookup {
   }
 
   /// Trouve un device pour la derniere version de l'OS par default cherche un iPhone
-  /// - Parameter deviceFilter: <#deviceFilter description#>
+  /// <#Description#>
+  /// - Parameter deviceFamily: <#deviceFamily description#>
   static public func findADeviceForLastOSVersion(_ deviceFamily: DeviceFamily = .iPhone)
     -> Platform?
   {
@@ -26,7 +28,10 @@ extension PlatformLookup {
   }
 
   /// Trouve tous les devices pour une version d'os
-  /// - Parameter deviceFilter: <#deviceFilter description#>
+  /// <#Description#>
+  /// - Parameters:
+  ///   - deviceFamily: <#deviceFamily description#>
+  ///   - version: <#version description#>
   static public func findAllDevicesForAnOSVersion(
     _ deviceFamily: DeviceFamily,
     version: String? = nil
@@ -38,7 +43,10 @@ extension PlatformLookup {
   }
 
   /// Trouve tous les devices pour une version d'os
-  /// - Parameter deviceFilter: <#deviceFilter description#>
+  /// <#Description#>
+  /// - Parameters:
+  ///   - deviceName: <#deviceName description#>
+  ///   - version: <#version description#>
   static public func findAllDevicesForAnOSVersion(deviceName: String, version: String? = nil)
     -> [Platform]
   {
@@ -49,8 +57,11 @@ extension PlatformLookup {
     return PlatformLookup.findAllDevicesForAnOSVersion(deviceFamily, version: version)
   }
 
-  // MARK: Private
-
+  // MARK: - Private
+  /// <#Description#>
+  /// - Parameters:
+  ///   - deviceFilter: <#deviceFilter description#>
+  ///   - runtimeFilter: <#runtimeFilter description#>
   private func getPlatform(with deviceFilter: DeviceFilter, runtimeFilter: RuntimeFilter) -> String?
   {
     if let platform = getAllDevices(with: deviceFilter, runtimeFilter: runtimeFilter).last {
@@ -61,10 +72,18 @@ extension PlatformLookup {
     return nil
   }
 
+  /// <#Description#>
+  /// - Parameters:
+  ///   - deviceFilter: <#deviceFilter description#>
+  ///   - runtimeFilter: <#runtimeFilter description#>
   private func getPlatform(with deviceFilter: DeviceFilter, runtimeFilter: RuntimeFilter)
     -> Platform?
   { return getAllDevices(with: deviceFilter, runtimeFilter: runtimeFilter).last }
 
+  /// <#Description#>
+  /// - Parameters:
+  ///   - deviceFilter: <#deviceFilter description#>
+  ///   - runtimeFilter: <#runtimeFilter description#>
   private func getAllDevices(with deviceFilter: DeviceFilter, runtimeFilter: RuntimeFilter)
     -> [Platform]
   {
