@@ -1,6 +1,5 @@
 import Foundation
-// import PlatformLookup  // mackoj/SimulatorControl ~> 0.8.0
-import PlatformLookup  // https://github.com/mackoj/SimulatorControl  == a037a15
+import PlatformLookup  // mackoj/SimulatorControl
 
 func findDevicePlatform(_ args: [String]) throws {
   if let platform:String = try PlatformLookup.findADeviceForLastOSVersion() {
