@@ -5,8 +5,6 @@ import SimulatorControl
 /// <#Description#>
 public final class PlatformLookup {
   /// <#Description#>
-  public enum PlatformLookupError: Error { case failedToInitializeDataIsNotValid }
-  /// <#Description#>
   public typealias DeviceFilter = (_ device: Device) -> Bool
   /// <#Description#>
   public typealias RuntimeFilter = (_ device: Runtime) -> Bool
