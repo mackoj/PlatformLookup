@@ -5,7 +5,7 @@ public enum ShellError: Error { case pipeOutputFailedToDecode }
 
 /// <#Description#>
 /// - Parameter command: <#command description#>
-public func shell(_ command: String) throws -> String {
+@discardableResult public func shell(_ command: String) throws -> String {
   let task = Process()
   task.launchPath = "/bin/bash"
   task.arguments = ["-c", command]
@@ -16,7 +16,7 @@ public func shell(_ command: String) throws -> String {
 /// - Parameters:
 ///   - command: <#command description#>
 ///   - arguments: <#arguments description#>
-public func shell(_ command: String, arguments: [String]) throws -> String {
+@discardableResult public func shell(_ command: String, arguments: [String]) throws -> String {
   let task = Process()
   task.launchPath = "/bin/bash"
   task.arguments = arguments
