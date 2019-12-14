@@ -3,6 +3,7 @@
 ## P0
 - [ ] Add missing tests
 - [ ] Remove all the warnings
+- [ ] Add simple script to call them
 
 ## P1
 - [ ] Code Documentation
@@ -14,3 +15,4 @@
 - [ ] PR Boiler plate
 - [ ] Auto review
 - [ ] Dr String
+- [ ] How to help translate error message
