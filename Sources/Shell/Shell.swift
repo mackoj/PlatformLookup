@@ -1,7 +1,10 @@
 import Foundation
 
+/// <#Description#>
 public enum ShellError: Error { case pipeOutputFailedToDecode }
 
+/// <#Description#>
+/// - Parameter command: <#command description#>
 public func shell(_ command: String) throws -> String {
   let task = Process()
   task.launchPath = "/bin/bash"
@@ -9,6 +12,10 @@ public func shell(_ command: String) throws -> String {
   return try performShellOperation(task)
 }
 
+/// <#Description#>
+/// - Parameters:
+///   - command: <#command description#>
+///   - arguments: <#arguments description#>
 public func shell(_ command: String, arguments: [String]) throws -> String {
   let task = Process()
   task.launchPath = "/bin/bash"
@@ -16,6 +23,10 @@ public func shell(_ command: String, arguments: [String]) throws -> String {
   return try performShellOperation(task)
 }
 
+// MARK: - Private
+
+/// <#Description#>
+/// - Parameter task: <#task description#>
 private func performShellOperation(_ task: Process) throws -> String {
   let pipe = Pipe()
   task.standardOutput = pipe

@@ -1,6 +1,6 @@
 import Foundation
 
-// MARK: - SimulatorControl
+/// <#Description#>
 public struct SimulatorControl: Equatable, Codable {
   public let devicetypes: [Devicetype]?
   public let runtimes: [Runtime]?
