@@ -7,17 +7,21 @@
 
 import Foundation
 
-public func shell(_ command: String) -> String {
-    let task = Process()
-    task.launchPath = "/bin/bash"
-    task.arguments = ["-c", command]
+public enum ShellError: Error {
+  case pipeOutputFailedToDecode
+}
 
-    let pipe = Pipe()
-    task.standardOutput = pipe
-    task.launch()
-
-    let data = pipe.fileHandleForReading.readDataToEndOfFile()
-    let output: String = NSString(data: data, encoding: String.Encoding.utf8.rawValue)! as String
-
-    return output
+public func shell(_ command: String) throws -> String {
+  let task = Process()
+  task.launchPath = "/bin/bash"
+  task.arguments = ["-c", command]
+  
+  let pipe = Pipe()
+  task.standardOutput = pipe
+  task.launch()
+  
+  let data = pipe.fileHandleForReading.readDataToEndOfFile()
+  guard let output: String = String(data: data, encoding: .utf8) else { throw(ShellError.pipeOutputFailedToDecode) }
+  
+  return output
 }

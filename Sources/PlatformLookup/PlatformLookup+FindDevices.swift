@@ -14,13 +14,13 @@ extension PlatformLookup {
   /// platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.2\"
   /// - Parameter deviceFilter: <#deviceFilter description#>
   static public func findADeviceForLastOSVersion(_ deviceFamily : DeviceFamily = .iPhone) -> String? {
-    return PlatformLookup.shared?._getPlatform(deviceFilter: filterDeviceFamily(deviceFamily), runtimeFilter: filterRuntime(deviceFamily.os, version: nil))
+    return PlatformLookup.shared?.getPlatform(with: filterDeviceFamily(deviceFamily), runtimeFilter: filterRuntime(deviceFamily.os, version: nil))
   }
 
   /// Trouve un device pour la derniere version de l'OS par default cherche un iPhone
   /// - Parameter deviceFilter: <#deviceFilter description#>
   static public func findADeviceForLastOSVersion(_ deviceFamily : DeviceFamily = .iPhone) -> Platform? {
-    return PlatformLookup.shared?._getPlatform(filterDeviceFamily(deviceFamily), runtimeFilter: filterRuntime(deviceFamily.os, version: nil))
+    return PlatformLookup.shared?.getPlatform(with: filterDeviceFamily(deviceFamily), runtimeFilter: filterRuntime(deviceFamily.os, version: nil))
   }
 
   /// Trouve tous les devices pour une version d'os
@@ -41,7 +41,7 @@ extension PlatformLookup {
   
   // MARK: Private
   
-  private func _getPlatform(deviceFilter : DeviceFilter, runtimeFilter: RuntimeFilter) -> String? {
+  private func getPlatform(with deviceFilter : DeviceFilter, runtimeFilter: RuntimeFilter) -> String? {
     if let platform = getAllDevices(with: deviceFilter, runtimeFilter: runtimeFilter).last {
       return """
       platform="iOS Simulator,name=\(platform.devices.last!.name),OS=\(platform.runtime.version)"
@@ -50,7 +50,7 @@ extension PlatformLookup {
     return nil
   }
   
-  private func _getPlatform(_ deviceFilter : DeviceFilter, runtimeFilter: RuntimeFilter) -> Platform? {
+  private func getPlatform(with deviceFilter : DeviceFilter, runtimeFilter: RuntimeFilter) -> Platform? {
     return getAllDevices(with: deviceFilter, runtimeFilter: runtimeFilter).last
   }
   
