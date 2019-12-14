@@ -1,9 +1,6 @@
 init:
 	git config core.hooksPath .githooks
 
-xcodeproj:
-	swift run xcodegen
-
 build:
 	swift build
 
@@ -11,9 +8,10 @@ test-swift:
 	swift test
 
 test-macos:
+	swift package generate-xcodeproj
 	set -o pipefail && \
 	xcodebuild test \
-		-scheme SnapshotTesting_macOS \
+		-scheme SimulatorControl-Package \
 		-destination platform="macOS" \
 
 test-all: test-swift test-macos
