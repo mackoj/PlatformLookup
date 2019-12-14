@@ -18,7 +18,7 @@ let package = Package(
       targets: ["PlatformLookup"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/mackoj/Version.git", from: "0.7.2"),
+    .package(url: "https://github.com/mrackwitz/Version.git", from: "0.7.2"),
   ],
   targets: [
     .target(name: "PlatformLookup", dependencies: ["SimulatorControl", "Shell"]),
