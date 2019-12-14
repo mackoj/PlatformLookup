@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Jeffrey Macko on 26/11/2019.
-//
-
 import Foundation
 import SimulatorControl
 
