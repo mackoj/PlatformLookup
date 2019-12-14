@@ -39,7 +39,6 @@ final class PlatformLookupTests: XCTestCase {
         )
         let finalDevice = iPhones!.first!
         XCTAssertEqual(finalDevice, testDevice)
-        
       }
     } catch {
       print(error)
