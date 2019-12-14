@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "Version",
-        "repositoryURL": "https://github.com/mackoj/Version.git",
+        "repositoryURL": "https://github.com/mrackwitz/Version.git",
         "state": {
           "branch": null,
-          "revision": "16ba00e8d8fe351a3f239f00beb4c65be6ea1b0f",
+          "revision": "43b1588916820687a056a305720f8f64161ca810",
           "version": "0.7.2"
         }
       }
