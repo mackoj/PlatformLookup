@@ -1,12 +1,10 @@
-import XCTest
 import SimulatorControl
+import XCTest
+
 @testable import PlatformLookup
 
 final class PlatformLookupTests: XCTestCase {
-  override func setUp() {
-    try? PlatformLookup.instanciate(SimulatorControlJSONData)
-  }
-  
+  override func setUp() { try? PlatformLookup.instanciate(SimulatorControlJSONData) }
   func test_decodeXcrunSimctlJSONData() {
     do {
       let simctl = try JSONDecoder().decode(SimulatorControl.self, from: SimulatorControlJSONData)
@@ -14,14 +12,14 @@ final class PlatformLookupTests: XCTestCase {
       if let firstRuntime = runtimesSorted?.first {
         let testRuntime = Runtime(
           version: "13.2",
-          bundlePath: "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime",
+          bundlePath:
+            "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime",
           isAvailable: true,
           name: "iOS 13.2",
           identifier: "com.apple.CoreSimulator.SimRuntime.iOS-13-2",
           buildversion: "17B84"
         )
         XCTAssertEqual(firstRuntime, testRuntime)
-        
         let identifier = firstRuntime.identifier
         let devices = simctl.devices?[identifier]!
         let iPhones = devices?.filter({ (device) -> Bool in
@@ -29,7 +27,6 @@ final class PlatformLookupTests: XCTestCase {
           let isAvailable = device.isAvailable ?? false
           return (isIphone && isAvailable)
         })
-        
         let testDevice = Device(
           state: "Shutdown",
           isAvailable: true,
@@ -40,19 +37,14 @@ final class PlatformLookupTests: XCTestCase {
         let finalDevice = iPhones!.first!
         XCTAssertEqual(finalDevice, testDevice)
       }
-    } catch {
-      print(error)
-    }
+    } catch { print(error) }
   }
-  
   func test_findADeviceForLastOSVersion_string() {
-    let platform : String? = PlatformLookup.findADeviceForLastOSVersion()
+    let platform: String? = try? PlatformLookup.findADeviceForLastOSVersion()
     XCTAssertEqual(platform, "platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.2\"")
   }
-  
   func test_findADeviceForLastOSVersion_platform() {
-    let platform : Platform? = PlatformLookup.findADeviceForLastOSVersion()
-    
+    let platform: Platform? = try? PlatformLookup.findADeviceForLastOSVersion()
     let device = Device(
       state: "Shutdown",
       isAvailable: true,
@@ -62,17 +54,16 @@ final class PlatformLookupTests: XCTestCase {
     )
     let runtime = Runtime(
       version: "13.2",
-      bundlePath: "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime",
+      bundlePath:
+        "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime",
       isAvailable: true,
       name: "iOS 13.2",
       identifier: "com.apple.CoreSimulator.SimRuntime.iOS-13-2",
       buildversion: "17B84"
     )
-    
     XCTAssertEqual(platform?.runtime, runtime)
     XCTAssertEqual(platform?.devices.last, device)
   }
-  
   func test_findADeviceForLastOSVersion_allCases() {
     var device = Device(
       state: "Shutdown",
@@ -83,7 +74,8 @@ final class PlatformLookupTests: XCTestCase {
     )
     var runtime = Runtime(
       version: "13.2",
-      bundlePath: "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime",
+      bundlePath:
+        "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime",
       isAvailable: true,
       name: "iOS 13.2",
       identifier: "com.apple.CoreSimulator.SimRuntime.iOS-13-2",
@@ -100,14 +92,14 @@ final class PlatformLookupTests: XCTestCase {
     )
     runtime = Runtime(
       version: "13.2",
-      bundlePath: "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime",
+      bundlePath:
+        "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime",
       isAvailable: true,
       name: "iOS 13.2",
       identifier: "com.apple.CoreSimulator.SimRuntime.iOS-13-2",
       buildversion: "17B84"
     )
     let p2 = Platform(runtime: runtime, device: device)
-        
     device = Device(
       state: "Shutdown",
       isAvailable: true,
@@ -115,10 +107,10 @@ final class PlatformLookupTests: XCTestCase {
       udid: "76998A1E-F5F5-4F63-B86C-805C25C7C5DB",
       availabilityError: nil
     )
-        
     runtime = Runtime(
       version: "13.2",
-      bundlePath: "/Applications/Xcode.app/Contents/Developer/Platforms/AppleTVOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/tvOS.simruntime",
+      bundlePath:
+        "/Applications/Xcode.app/Contents/Developer/Platforms/AppleTVOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/tvOS.simruntime",
       isAvailable: true,
       name: "tvOS 13.2",
       identifier: "com.apple.CoreSimulator.SimRuntime.tvOS-13-2",
@@ -135,7 +127,8 @@ final class PlatformLookupTests: XCTestCase {
     )
     runtime = Runtime(
       version: "6.1",
-      bundlePath: "/Applications/Xcode.app/Contents/Developer/Platforms/WatchOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/watchOS.simruntime",
+      bundlePath:
+        "/Applications/Xcode.app/Contents/Developer/Platforms/WatchOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/watchOS.simruntime",
       isAvailable: true,
       name: "watchOS 6.1",
       identifier: "com.apple.CoreSimulator.SimRuntime.watchOS-6-1",
@@ -143,15 +136,12 @@ final class PlatformLookupTests: XCTestCase {
     )
     let p4 = Platform(runtime: runtime, device: device)
 
-    for (expectedPlatform, aCase) in zip([p1, p2, p3, p4],  PlatformLookup.DeviceFamily.allCases) {
-      let platform : Platform? = PlatformLookup.findADeviceForLastOSVersion(aCase)
+    for (expectedPlatform, aCase) in zip([p1, p2, p3, p4], PlatformLookup.DeviceFamily.allCases) {
+      let platform: Platform? = try? PlatformLookup.findADeviceForLastOSVersion(aCase)
       XCTAssertEqual(platform?.runtime, expectedPlatform.runtime)
       XCTAssertEqual(platform?.devices.last, expectedPlatform.devices.last)
     }
   }
-  
-  
-  
   static var allTests = [
     ("test_decodeXcrunSimctlJSONData", test_decodeXcrunSimctlJSONData),
     ("test_findADeviceForLastOSVersion_string", test_findADeviceForLastOSVersion_string),
