@@ -41,15 +41,15 @@ final class SimulatorControlTests: XCTestCase {
     }
   }
   
-  func test_platform() {
-    SimulatorControlManager.instanciate(SimulatorControlJSONData)
-    let platform : String? = SimulatorControlManager.platform()
+  func test_findADeviceForLastOSVersion_string() {
+    PlatformLookup.instanciate(SimulatorControlJSONData)
+    let platform : String? = PlatformLookup.findADeviceForLastOSVersion()
     XCTAssertEqual(platform, "platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.2\"")
   }
   
-  func test_getMostRecentPlatform() {
-    SimulatorControlManager.instanciate(SimulatorControlJSONData)
-    let platform : Platform? = SimulatorControlManager.getMostRecentPlatform()
+  func test_findADeviceForLastOSVersion_platform() {
+    PlatformLookup.instanciate(SimulatorControlJSONData)
+    let platform : Platform? = PlatformLookup.findADeviceForLastOSVersion()
     
     let device = Device(
       state: "Shutdown",
@@ -71,8 +71,8 @@ final class SimulatorControlTests: XCTestCase {
     XCTAssertEqual(platform?.devices.last, device)
   }
   
-  func test_getMostRecentPlatform_allCases() {
-    SimulatorControlManager.instanciate(SimulatorControlJSONData)
+  func test_findADeviceForLastOSVersion_allCases() {
+    PlatformLookup.instanciate(SimulatorControlJSONData)
     
     var device = Device(
       state: "Shutdown",
@@ -143,8 +143,8 @@ final class SimulatorControlTests: XCTestCase {
     )
     let p4 = Platform(runtime: runtime, device: device)
 
-    for (expectedPlatform, aCase) in zip([p1, p2, p3, p4],  SimulatorControlManager.DeviceFamily.allCases) {
-      let platform : Platform? = SimulatorControlManager.getMostRecentPlatform(aCase)
+    for (expectedPlatform, aCase) in zip([p1, p2, p3, p4],  PlatformLookup.DeviceFamily.allCases) {
+      let platform : Platform? = PlatformLookup.findADeviceForLastOSVersion(aCase)
       XCTAssertEqual(platform?.runtime, expectedPlatform.runtime)
       XCTAssertEqual(platform?.devices.last, expectedPlatform.devices.last)
     }
@@ -154,8 +154,8 @@ final class SimulatorControlTests: XCTestCase {
   
   static var allTests = [
     ("test_decodeXcrunSimctlJSONData", test_decodeXcrunSimctlJSONData),
-    ("test_platform", test_platform),
-    ("test_getMostRecentPlatform", test_getMostRecentPlatform),
-    ("test_getMostRecentPlatform_allCases", test_getMostRecentPlatform_allCases),
+    ("test_findADeviceForLastOSVersion_string", test_findADeviceForLastOSVersion_string),
+    ("test_findADeviceForLastOSVersion_platform", test_findADeviceForLastOSVersion_platform),
+    ("test_findADeviceForLastOSVersion_allCases", test_findADeviceForLastOSVersion_allCases),
   ]
 }
