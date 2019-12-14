@@ -16,7 +16,7 @@ public func shell(_ command: String, arguments: [String]) throws -> String {
   return try performShellOperation(task)
 }
 
-private func performShellOperation(_ task : Process) throws -> String {
+private func performShellOperation(_ task: Process) throws -> String {
   let pipe = Pipe()
   task.standardOutput = pipe
   task.launch()
