@@ -1,3 +1,13 @@
+# PlatformLookup
+
+This package help to find/filter/sort all devices and runtimes available in xcrun simctl.
+
+```swift
+```
+
 # SimulatorControl
 
-A description of this package.
+This package is a representation of xcrun simctl devices and runtimes it act as a model here.
+
+```swift
+```

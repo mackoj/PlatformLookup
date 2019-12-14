@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SimulatorControl
 
 public struct Platform : Equatable, Codable {
   let devices: [Device]
