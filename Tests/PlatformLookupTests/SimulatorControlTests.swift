@@ -1,7 +1,12 @@
 import XCTest
-@testable import SimulatorControl
+import SimulatorControl
+@testable import PlatformLookup
 
-final class SimulatorControlTests: XCTestCase {
+final class PlatformLookupTests: XCTestCase {
+  override func setUp() {
+    PlatformLookup.instanciate(SimulatorControlJSONData)
+  }
+  
   func test_decodeXcrunSimctlJSONData() {
     do {
       let simctl = try JSONDecoder().decode(SimulatorControl.self, from: SimulatorControlJSONData)
@@ -42,13 +47,11 @@ final class SimulatorControlTests: XCTestCase {
   }
   
   func test_findADeviceForLastOSVersion_string() {
-    PlatformLookup.instanciate(SimulatorControlJSONData)
     let platform : String? = PlatformLookup.findADeviceForLastOSVersion()
     XCTAssertEqual(platform, "platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.2\"")
   }
   
   func test_findADeviceForLastOSVersion_platform() {
-    PlatformLookup.instanciate(SimulatorControlJSONData)
     let platform : Platform? = PlatformLookup.findADeviceForLastOSVersion()
     
     let device = Device(
@@ -72,8 +75,6 @@ final class SimulatorControlTests: XCTestCase {
   }
   
   func test_findADeviceForLastOSVersion_allCases() {
-    PlatformLookup.instanciate(SimulatorControlJSONData)
-    
     var device = Device(
       state: "Shutdown",
       isAvailable: true,
