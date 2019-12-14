@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-  name: "SimulatorControl",
+  name: "PlatformLookup",
   platforms: [.macOS(.v10_14)],
   products: [
     .library(

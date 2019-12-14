@@ -6,7 +6,7 @@ This package help to find/filter/sort all devices and runtimes available in xcru
 #!/usr/bin/swift sh
 
 import Foundation
-import PlatformLookup  // @mackoj
+import PlatformLookup  // mackoj/SimulatorControl
 
 func findDevicePlatform(_ args: [String]) throws {
   if let platform: String = try PlatformLookup.findADeviceForLastOSVersion() {
@@ -30,12 +30,17 @@ do {
 
 This package is a representation of xcrun simctl devices and runtimes it act as a model here.
 
+```shell
+xcrun simctl list -j > simctl_device_list.json
+```
 ```swift
+let simctl = try JSONDecoder().decode(SimulatorControl.self, from: SimulatorControlJSONData)
 ```
 
 # Shell 🐚
 
-A Simple help to perform shell command
+A Simple help to perform a shell command and pipe it's output.
 
 ```swift
+shell("xcrun simctl list -j")
 ```
