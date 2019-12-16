@@ -1,4 +1,5 @@
 import Foundation
+import SimulatorControl
 
 extension PlatformLookup {
   // MARK: - Find Devices
@@ -58,6 +59,21 @@ extension PlatformLookup {
       with: filterDeviceFamily(deviceFamily),
       runtimeFilter: filterRuntime(deviceFamily.os, version: nil)
     )
+  }
+  /// <#Description#>
+  /// - Parameters:
+  ///   - platform: <#platform description#>
+  ///   - deviceIndex: <#deviceIndex description#>
+  static public func format(_ platform: Platform, deviceIndex: Int? = nil)
+    throws -> String
+  {
+    guard platform.devices.count > 0 else {
+      throw (PlatformLookupError.noDeviceFound)
+    }
+    let device: Device
+    if let idx = deviceIndex { device = platform.devices[idx] }
+    else { device = platform.devices.last! }
+    return "iOS Simulator,name=\(device.name),OS=\(platform.runtime.version)"
   }
 
   // MARK: - Private

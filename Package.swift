@@ -7,7 +7,7 @@ let package = Package(
   name: "PlatformLookup",
   platforms: [.macOS(.v10_14)],
   products: [
-    .executable(name: "plCLI", targets: ["cli"]),
+    .executable(name: "cli", targets: ["cli"]),
     .library(name: "SimulatorControl", targets: ["SimulatorControl"]),
     .library(name: "Shell", targets: ["Shell"]),
     .library(name: "PlatformLookup", targets: ["PlatformLookup"]),
