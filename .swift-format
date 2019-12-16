@@ -1,4 +1,5 @@
 {
+  "lineLength" : 80,
   "lineBreakBeforeEachArgument" : true,
   "respectsExistingLineBreaks" : false,
   "tabWidth" : 4,

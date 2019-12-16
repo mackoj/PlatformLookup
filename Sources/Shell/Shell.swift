@@ -16,7 +16,9 @@ public enum ShellError: Error { case pipeOutputFailedToDecode }
 /// - Parameters:
 ///   - command: <#command description#>
 ///   - arguments: <#arguments description#>
-@discardableResult public func shell(_ command: String, arguments: [String]) throws -> String {
+@discardableResult public func shell(_ command: String, arguments: [String])
+  throws -> String
+{
   let task = Process()
   task.launchPath = "/bin/bash"
   task.arguments = arguments

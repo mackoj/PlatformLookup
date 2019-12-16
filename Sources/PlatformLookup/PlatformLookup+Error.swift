@@ -16,8 +16,12 @@ extension PlatformLookup {
           comment: "Invalid Data"
         )
       case .unknowDeviceFamilly(let input):
-        return NSLocalizedString("Device familly \(input) unknown", comment: "Unknown Device")
-      case .noRuntimeFound: return NSLocalizedString("Runtime unknown", comment: "Unknown Runtime")
+        return NSLocalizedString(
+          "Device familly \(input) unknown",
+          comment: "Unknown Device"
+        )
+      case .noRuntimeFound:
+        return NSLocalizedString("Runtime unknown", comment: "Unknown Runtime")
       case .thisShouldNeverAppen(let function, let file, let line):
         let message =
           "This should really never happen please look at \(function) in \(file):\(line)"
