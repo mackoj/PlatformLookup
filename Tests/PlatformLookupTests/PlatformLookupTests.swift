@@ -166,7 +166,7 @@ final class PlatformLookupTests: XCTestCase {
   func test_errors() {
     // PlatformLookupError.unknowDeviceFamilly
     do {
-      var platforms = try PlatformLookup.findAllDeviceNamed("Pikachu 22")
+      let platforms = try PlatformLookup.findAllDeviceNamed("Pikachu 22")
       XCTAssertEqual(platforms.count, 0)
     } catch {
       XCTAssertEqual(
@@ -176,7 +176,7 @@ final class PlatformLookupTests: XCTestCase {
     }
     // PlatformLookupError.noRuntimeFound
     do {
-      var platforms = try PlatformLookup.findAllDeviceNamed("iPhone", version: "0.1")
+      let platforms = try PlatformLookup.findAllDeviceNamed("iPhone", version: "0.1")
       XCTAssertEqual(platforms.count, 0)
     } catch {
       XCTAssertEqual(
@@ -185,7 +185,7 @@ final class PlatformLookupTests: XCTestCase {
       )
     }
     // PlatformLookupError.failedToInitializeDataIsNotValid
-    do { try PlatformLookup(nil) } catch {
+    do { _ = try PlatformLookup(nil) } catch {
       XCTAssertEqual(
         error.localizedDescription,
         PlatformLookup.PlatformLookupError.failedToInitializeDataIsNotValid.localizedDescription

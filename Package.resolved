@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "swift-tools-support-core",
+        "repositoryURL": "https://github.com/apple/swift-tools-support-core.git",
+        "state": {
+          "branch": "master",
+          "revision": "edc19d30a674cb9f3311b77ffb406dc7c5d2f540",
+          "version": null
+        }
+      },
+      {
         "package": "Version",
         "repositoryURL": "https://github.com/mrackwitz/Version.git",
         "state": {
