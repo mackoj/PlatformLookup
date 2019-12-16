@@ -26,8 +26,8 @@ fi
 
 if ! [ -x "$(command -v generate-enum-properties)" ]; then
   echo "Installing swift-enum-properties"
-  git clone https://github.com/pointfreeco/swift-enum-properties.git
-  cd swift-enum-properties
+  git clone https://github.com/pointfreeco/swift-enum-properties.git /tmp/__hawkci__/swift-enum-properties
+  cd /tmp/__hawkci__/swift-enum-properties
   make install
 else
   echo "Generating swift-enum-properties"
