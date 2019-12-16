@@ -16,7 +16,7 @@
     "AlwaysUseLowerCamelCase" : true,
     "AmbiguousTrailingClosureOverload" : true,
     "BeginDocumentationCommentWithOneLineSummary" : true,
-    "BlankLineBetweenMembers" : false,
+    "BlankLineBetweenMembers" : true,
     "CaseIndentLevelEqualsSwitch" : true,
     "DoNotUseSemicolons" : true,
     "DontRepeatTypeInStaticProperties" : true,
