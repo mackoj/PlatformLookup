@@ -25,7 +25,7 @@ public final class PlatformLookup {
 
   /// <#Description#>
   /// - Parameter data: <#data description#>
-  private init(_ data: Data?) throws {
+  internal init(_ data: Data?) throws {
     guard let data = data else { throw (PlatformLookupError.failedToInitializeDataIsNotValid) }
 
     simctl = try JSONDecoder().decode(SimulatorControl.self, from: data)

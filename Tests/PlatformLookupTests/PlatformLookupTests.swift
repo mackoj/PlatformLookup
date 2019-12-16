@@ -154,28 +154,27 @@ final class PlatformLookupTests: XCTestCase {
   }
   func test_findAllDevice() {
     do {
-      // No device found
-      var platforms = try PlatformLookup.findAllDevice(.appleWatch, version: "2.0")
-      XCTAssertEqual(platforms.count, 0)
-      platforms = try PlatformLookup.findAllDevice(.appleWatch)
+      var platforms = try PlatformLookup.findAllDevice(.appleWatch)
       XCTAssertGreaterThan(platforms.count, 0)
 
       platforms = try PlatformLookup.findAllDevice(.appleWatch, version: "6.1")
       XCTAssertGreaterThan(platforms.count, 0)
       XCTAssertEqual(platforms.first?.devices.count, 4)
       XCTAssertEqual(platforms.first?.runtime.version, "6.1")
-      // No device found
-      platforms = try PlatformLookup.findAllDevice(.appleWatch, version: "Cacahuète")
-      XCTAssertEqual(platforms.count, 0)
     } catch { XCTFail(error.localizedDescription) }
   }
   func test_errors() {
-    // Unknow device familly
+    // PlatformLookupError.unknowDeviceFamilly
     do {
       var platforms = try PlatformLookup.findAllDeviceNamed("Pikachu 22")
       XCTAssertEqual(platforms.count, 0)
-    } catch { XCTAssertEqual(error.localizedDescription, "Device familly Pikachu 22 unknown") }
-    // Unknow device familly
+    } catch {
+      XCTAssertEqual(
+        error.localizedDescription,
+        PlatformLookup.PlatformLookupError.unknowDeviceFamilly("Pikachu 22").localizedDescription
+      )
+    }
+    // PlatformLookupError.noRuntimeFound
     do {
       var platforms = try PlatformLookup.findAllDeviceNamed("iPhone", version: "0.1")
       XCTAssertEqual(platforms.count, 0)
@@ -185,7 +184,21 @@ final class PlatformLookupTests: XCTestCase {
         PlatformLookup.PlatformLookupError.noRuntimeFound.localizedDescription
       )
     }
+    // PlatformLookupError.failedToInitializeDataIsNotValid
+    do { try PlatformLookup(nil) } catch {
+      XCTAssertEqual(
+        error.localizedDescription,
+        PlatformLookup.PlatformLookupError.failedToInitializeDataIsNotValid.localizedDescription
+      )
+    }
 
+    // not so sure about keeping this one
+    do { try PlatformLookup.instanciate(Data()) } catch {
+      XCTAssertEqual(
+        error.localizedDescription,
+        "The data couldn’t be read because it isn’t in the correct format."
+      )
+    }
   }
   static var allTests = [
     ("test_decodeXcrunSimctlJSONData", test_decodeXcrunSimctlJSONData),
