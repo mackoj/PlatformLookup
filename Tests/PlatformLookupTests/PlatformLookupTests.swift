@@ -37,7 +37,7 @@ final class PlatformLookupTests: XCTestCase {
         let finalDevice = iPhones!.first!
         XCTAssertEqual(finalDevice, testDevice)
       }
-    } catch { print(error) }
+    } catch { XCTFail(error.localizedDescription) }
   }
   func test_findADeviceForLastOSVersion_string() {
     let platform: String? = try? PlatformLookup.findADeviceForLastOSVersion()
@@ -82,7 +82,6 @@ final class PlatformLookupTests: XCTestCase {
       buildversion: "17B84"
     )
     let p1 = Platform(runtime: runtime, device: device)
-
     device = Device(
       state: "Shutdown",
       isAvailable: true,
@@ -117,7 +116,6 @@ final class PlatformLookupTests: XCTestCase {
       buildversion: "17K81"
     )
     let p3 = Platform(runtime: runtime, device: device)
-
     device = Device(
       state: "Shutdown",
       isAvailable: true,
@@ -135,17 +133,66 @@ final class PlatformLookupTests: XCTestCase {
       buildversion: "17S83"
     )
     let p4 = Platform(runtime: runtime, device: device)
-
     for (expectedPlatform, aCase) in zip([p1, p2, p3, p4], PlatformLookup.DeviceFamily.allCases) {
       let platform: Platform? = try? PlatformLookup.findADeviceForLastOSVersion(aCase)
       XCTAssertEqual(platform?.runtime, expectedPlatform.runtime)
       XCTAssertEqual(platform?.devices.last, expectedPlatform.devices.last)
     }
   }
+  func test_findAllDeviceNamed() {
+    do {
+      // No device found
+      var platforms = try PlatformLookup.findAllDeviceNamed("iPad Pro (64-inch)")
+      XCTAssertEqual(platforms.count, 0)
+      platforms = try PlatformLookup.findAllDeviceNamed("iPad Pro (9.7-inch)")
+      XCTAssertGreaterThan(platforms.count, 0)
+      platforms = try PlatformLookup.findAllDeviceNamed("iPad Pro (9.7-inch)", version: "13.2")
+      XCTAssertEqual(platforms.count, 1)
+      XCTAssertEqual(platforms.first?.devices.first?.name, "iPad Pro (9.7-inch)")
+      XCTAssertEqual(platforms.first?.runtime.version, "13.2")
+    } catch { XCTFail(error.localizedDescription) }
+  }
+  func test_findAllDevice() {
+    do {
+      // No device found
+      var platforms = try PlatformLookup.findAllDevice(.appleWatch, version: "2.0")
+      XCTAssertEqual(platforms.count, 0)
+      platforms = try PlatformLookup.findAllDevice(.appleWatch)
+      XCTAssertGreaterThan(platforms.count, 0)
+
+      platforms = try PlatformLookup.findAllDevice(.appleWatch, version: "6.1")
+      XCTAssertGreaterThan(platforms.count, 0)
+      XCTAssertEqual(platforms.first?.devices.count, 4)
+      XCTAssertEqual(platforms.first?.runtime.version, "6.1")
+      // No device found
+      platforms = try PlatformLookup.findAllDevice(.appleWatch, version: "Cacahuète")
+      XCTAssertEqual(platforms.count, 0)
+    } catch { XCTFail(error.localizedDescription) }
+  }
+  func test_errors() {
+    // Unknow device familly
+    do {
+      var platforms = try PlatformLookup.findAllDeviceNamed("Pikachu 22")
+      XCTAssertEqual(platforms.count, 0)
+    } catch { XCTAssertEqual(error.localizedDescription, "Device familly Pikachu 22 unknown") }
+    // Unknow device familly
+    do {
+      var platforms = try PlatformLookup.findAllDeviceNamed("iPhone", version: "0.1")
+      XCTAssertEqual(platforms.count, 0)
+    } catch {
+      XCTAssertEqual(
+        error.localizedDescription,
+        PlatformLookup.PlatformLookupError.noRuntimeFound.localizedDescription
+      )
+    }
+
+  }
   static var allTests = [
     ("test_decodeXcrunSimctlJSONData", test_decodeXcrunSimctlJSONData),
     ("test_findADeviceForLastOSVersion_string", test_findADeviceForLastOSVersion_string),
     ("test_findADeviceForLastOSVersion_platform", test_findADeviceForLastOSVersion_platform),
     ("test_findADeviceForLastOSVersion_allCases", test_findADeviceForLastOSVersion_allCases),
+    ("test_findAllDeviceNamed", test_findAllDeviceNamed),
+    ("test_findAllDevice", test_findAllDevice),
   ]
 }

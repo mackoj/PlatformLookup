@@ -2,6 +2,34 @@ import Foundation
 
 extension PlatformLookup {
   // MARK: - Find Devices
+  /// Cherche un device qui correspond a un nom précis
+  /// - Parameters:
+  ///   - deviceName: <#deviceName description#>
+  ///   - version: <#version description#>
+  static public func findAllDeviceNamed(_ deviceName: String, version: String? = nil) throws
+    -> [Platform]
+  {
+    guard
+      let deviceFamily = DeviceFamily.allCases.first(where: { deviceName.contains($0.rawValue) })
+    else { throw (PlatformLookupError.unknowDeviceFamilly(deviceName)) }
+    return try PlatformLookup.shared?.getAllDevices(
+      with: filterDeviceName(deviceName),
+      runtimeFilter: filterRuntime(deviceFamily.os, version: version)
+    ) ?? []
+  }
+
+  /// Cherche un device qui correspond a un nom précis
+  /// - Parameters:
+  ///   - deviceName: <#deviceName description#>
+  ///   - version: <#version description#>
+  static public func findAllDevice(_ deviceFamily: DeviceFamily = .iPhone, version: String? = nil)
+    throws -> [Platform]
+  {
+    return try PlatformLookup.shared?.getAllDevices(
+      with: filterDeviceFamily(deviceFamily),
+      runtimeFilter: filterRuntime(deviceFamily.os, version: version)
+    ) ?? []
+  }
 
   /// Trouve un device pour la derniere version de l'OS par default cherche un iPhone
   /// platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.2\"
@@ -26,35 +54,6 @@ extension PlatformLookup {
       with: filterDeviceFamily(deviceFamily),
       runtimeFilter: filterRuntime(deviceFamily.os, version: nil)
     )
-  }
-
-  /// Trouve tous les devices pour une version d'os
-  /// <#Description#>
-  /// - Parameters:
-  ///   - deviceFamily: <#deviceFamily description#>
-  ///   - version: <#version description#>
-  static public func findAllDevicesForAnOSVersion(
-    _ deviceFamily: DeviceFamily,
-    version: String? = nil
-  ) throws -> [Platform] {
-    return try PlatformLookup.shared?.getAllDevices(
-      with: filterDeviceFamily(deviceFamily),
-      runtimeFilter: filterRuntime(deviceFamily.os, version: version)
-    ) ?? []
-  }
-
-  /// Trouve tous les devices pour une version d'os
-  /// <#Description#>
-  /// - Parameters:
-  ///   - deviceName: <#deviceName description#>
-  ///   - version: <#version description#>
-  static public func findAllDevicesForAnOSVersion(deviceName: String, version: String? = nil) throws
-    -> [Platform]
-  {
-    guard let deviceFamily = DeviceFamily(rawValue: deviceName) else {
-      throw (PlatformLookupError.unknowDeviceFamilly(deviceName))
-    }
-    return try PlatformLookup.findAllDevicesForAnOSVersion(deviceFamily, version: version)
   }
 
   // MARK: - Private
@@ -86,9 +85,8 @@ extension PlatformLookup {
   private func getAllDevices(with deviceFilter: DeviceFilter, runtimeFilter: RuntimeFilter) throws
     -> [Platform]
   {
-    guard let filteredRuntimes = simctl.runtimes?.filter(runtimeFilter) else {
-      throw (PlatformLookupError.noRuntimeFound)
-    }
+    guard let filteredRuntimes = simctl.runtimes?.filter(runtimeFilter), filteredRuntimes.count > 0
+    else { throw (PlatformLookupError.noRuntimeFound) }
     let sortedRuntimes = filteredRuntimes.sorted(by: <)
 
     return sortedRuntimes.compactMap { (runtime) -> Platform? in

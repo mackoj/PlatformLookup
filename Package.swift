@@ -19,7 +19,7 @@ let package = Package(
     .target(name: "PlatformLookup", dependencies: ["SimulatorControl", "Shell"]),
     .target(name: "Shell"), .target(name: "SimulatorControl", dependencies: ["Version"]),
     .testTarget(name: "PlatformLookupTests", dependencies: ["PlatformLookup", "SnapshotTesting"]),
-    .testTarget(name: "ShellTests", dependencies: ["Shell", "SnapshotTesting"]),
+    .testTarget(name: "ShellTests", dependencies: ["Shell"]),
   ],
   swiftLanguageVersions: [.v5]
 )
