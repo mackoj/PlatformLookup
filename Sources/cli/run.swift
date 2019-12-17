@@ -1,14 +1,14 @@
 import Foundation
 import PlatformLookup
 
-private func handle(_ error: CommandOption.CommandError) -> Int32 {
+private func handle(_ error: Command.CommandError) -> Int32 {
   switch error {
   case .toto: fputs("Config file doesn't exist at.", stderr)
   }
   return EXIT_FAILURE
 }
 
-func execute(_ command: CommandOption) throws -> Int32 {
+func execute(_ command: Command) throws -> Int32 {
   if (command.help != nil) {
     fputs("USAGE", stdout)
     exit(EXIT_SUCCESS)
@@ -37,7 +37,7 @@ func execute(_ command: CommandOption) throws -> Int32 {
 }
 
 func run(arguments: [String]) -> Int32 {
-  do { return try execute(CommandOption(arguments: arguments)) }
+  do { return try execute(Command(arguments: arguments)) }
   catch let error {
     fputs("\(error)", stderr)
     return EXIT_FAILURE

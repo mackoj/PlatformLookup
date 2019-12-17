@@ -21,7 +21,7 @@ enum OSVersionCommand {
   }
 }
 
-enum CommandOption {
+enum Command {
   enum CommandError: Error { case toto }
   case name(String)
   case osVersion(OSVersionCommand)
@@ -30,7 +30,7 @@ enum CommandOption {
   init(arguments: [String]) throws {
     let (parser, binder) = (kArgParser, kArgBinder)
     let result = try parser.parse(arguments)
-    var command = CommandOption.help
+    var command = Command.help
     try binder.fill(parseResult: result, into: &command)
     self = command
   }

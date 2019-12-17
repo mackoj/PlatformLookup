@@ -73,9 +73,9 @@ private let osVersionUsage = """
 let versionOverview = "Print version."
 let helpOverview = "Print help."
 
-let (kArgParser, kArgBinder): (ArgumentParser, ArgumentBinder<CommandOption>) =
+let (kArgParser, kArgBinder): (ArgumentParser, ArgumentBinder<Command>) =
   {
-    let binder = ArgumentBinder<CommandOption>()
+    let binder = ArgumentBinder<Command>()
     let main = ArgumentParser(usage: mainUsage, overview: mainOverview)
     let name = main.add(
       subparser: "name",
