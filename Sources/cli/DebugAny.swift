@@ -1,10 +1,6 @@
 import Foundation
-import SimulatorControl
 
-extension Device: CustomStringConvertible {
-  public var description: String { return DebugAny.snap(self) }
-}
-
+// Most of the code here as be taken from https://github.com/pointfreeco/swift-snapshot-testing/blob/master/Sources/SnapshotTesting/Snapshotting/Any.swift
 struct DebugAny {
   static func snap<T>(_ value: T, name: String? = nil, indent: Int = 0) -> String {
     let indentation = String(repeating: " ", count: indent)
@@ -29,12 +25,6 @@ struct DebugAny {
         options: .regularExpression
       )
       description = count == 0 ? "\(subjectType).none" : "\(subjectType)"
-    //    case (let value as AnySnapshotStringConvertible, _) where type(of: value).renderChildren:
-    //      description = value.snapshotDescription
-    //    case (let value as AnySnapshotStringConvertible, _):
-    //      return "\(indentation)- \(name.map { "\($0): " } ?? "")\(value.snapshotDescription)\n"
-    //    case (let value as CustomStringConvertible, _):
-    //      description = value.description
     case (_, .class?), (_, .struct?):
       description = String(describing: mirror.subjectType).replacingOccurrences(
         of: " #\\d+",
