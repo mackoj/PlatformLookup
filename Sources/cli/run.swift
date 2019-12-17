@@ -28,7 +28,8 @@ func execute(_ command: Command) throws -> Int32 {
     version: command.osVersion?.version
   )
   if (command.osVersion?.lastOS != nil), let platform = platforms.last {
-    let output = try PlatformLookup.format(platform)
+    let deviceFamily = try PlatformLookup.deviceFamilyFrom(name)
+    let output = try PlatformLookup.format(platform, deviceFamily: deviceFamily)
     fputs(output, stdout)
     exit(EXIT_SUCCESS)
   }
