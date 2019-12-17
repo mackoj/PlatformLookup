@@ -5,14 +5,14 @@ extension PlatformLookup {
   public enum DeviceFamily: String, RawRepresentable, CaseIterable {
     case iPhone = "iPhone"
     case iPad = "iPad"
-    case tv = "Apple TV"
-    case watch = "Apple Watch"
+    case appleTV = "Apple TV"
+    case appleWatch = "Apple Watch"
     static func variantes(_ deviceFamily: DeviceFamily) -> [String] {
       switch deviceFamily {
       case .iPhone: return ["iPhone"]
       case .iPad: return ["iPad"]
-      case .tv: return ["tv", "apple tv"]
-      case .watch: return ["watch", "apple watch"]
+      case .appleTV: return ["tv", "apple tv"]
+      case .appleWatch: return ["watch", "apple watch"]
       }
     }
     public init?(rawValue input: String) {
@@ -28,15 +28,15 @@ extension PlatformLookup {
     var os: String {
       switch self {
       case .iPhone, .iPad: return "iOS"
-      case .tv: return "tvOS"
-      case .watch: return "watchOS"
+      case .appleTV: return "tvOS"
+      case .appleWatch: return "watchOS"
       }
     }
     var simulatorName: String {
       switch self {
       case .iPhone, .iPad: return "iOS Simulator"
-      case .tv: return "tvOS Simulator"
-      case .watch: return "watchOS Simulator"
+      case .appleTV: return "tvOS Simulator"
+      case .appleWatch: return "watchOS Simulator"
       }
     }
   }
