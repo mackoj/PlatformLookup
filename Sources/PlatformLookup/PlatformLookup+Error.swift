@@ -38,16 +38,7 @@ extension PlatformLookup {
       }
     }
     /// A localized message describing the reason for the failure.
-    public var failureReason: String? {
-      return "failureReason"  //      switch self {
-      //      case .failedToInitializeDataIsNotValid:
-      //        <#code#>
-      //      case .unknowDeviceFamilly(_):
-      //        <#code#>
-      //      case .noRuntimeFound:
-      //        <#code#>
-      //      }
-    }
+    public var failureReason: String? { return "failureReason" }
     /// A localized message describing how one might recover from the failure.
     public var recoverySuggestion: String? { return "failureReason" }
     /// A localized message providing "help" text if the user requests help.
@@ -87,6 +78,16 @@ extension PlatformLookup {
         }
         self = .thisShouldNeverAppen(newValue.0, newValue.1, newValue.2)
       }
+    }
+
+    public var noDeviceFound: Void? {
+      guard case .noDeviceFound = self else { return nil }
+      return ()
+    }
+
+    public var invalidIndex: Void? {
+      guard case .invalidIndex = self else { return nil }
+      return ()
     }
   }
 }

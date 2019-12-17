@@ -73,45 +73,43 @@ private let osVersionUsage = """
 let versionOverview = "Print version."
 let helpOverview = "Print help."
 
-let (kArgParser, kArgBinder): (ArgumentParser, ArgumentBinder<Command>) =
-  {
-    let binder = ArgumentBinder<Command>()
-    let main = ArgumentParser(usage: mainUsage, overview: mainOverview)
-    let name = main.add(
-      subparser: "name",
-      usage: nameUsage,
-      overview: nameOverview
-    )
-    let osVersion = main.add(
-      subparser: "osVersion",
-      usage: osVersionUsage,
-      overview: osVersionOverview
-    )
-    _ = main.add(subparser: "version", usage: "", overview: versionOverview)
-    _ = main.add(subparser: "help", usage: "", overview: helpOverview)
-    binder.bind(parser: main) { (commandOption, sub) in
-      //    switch subcommand {
-      //    case "name":
-      //      name = .name("toto")
-      //    case "osVersion":
-      //      osVersion = .format(Configuration())
-      //    case "version":
-      //      command = .version
-      //    default:
-      //      command = .help
-      //    }
+let (kArgParser, kArgBinder): (ArgumentParser, ArgumentBinder<Command>) = {
+  let binder = ArgumentBinder<Command>()
+  let main = ArgumentParser(usage: mainUsage, overview: mainOverview)
+  let name = main.add(
+    subparser: "name",
+    usage: nameUsage,
+    overview: nameOverview
+  )
+  let osVersion = main.add(
+    subparser: "osVersion",
+    usage: osVersionUsage,
+    overview: osVersionOverview
+  )
+  _ = main.add(subparser: "version", usage: "", overview: versionOverview)
+  _ = main.add(subparser: "help", usage: "", overview: helpOverview)
+  binder.bind(parser: main) { (commandOption, sub) in//    switch subcommand {
+    //    case "name":
+    //      name = .name("toto")
+    //    case "osVersion":
+    //      osVersion = .format(Configuration())
+    //    case "version":
+    //      command = .version
+    //    default:
+    //      command = .help
+    //    }
+  }
+  for parser in [name, osVersion] {
+    binder.bind(
+      option: parser.add(
+        option: "--name",
+        shortName: "-n",
+        kind: String.self,
+        usage: "Parser Usage..... blablabla"
+      )
+    ) { (cmd, pourris) in print(cmd)
+      print(pourris)
     }
-    for parser in [name, osVersion] {
-      binder.bind(
-        option: parser.add(
-          option: "--name",
-          shortName: "-n",
-          kind: String.self,
-          usage: "Parser Usage..... blablabla"
-        )
-      ) { (cmd, pourris) in print(cmd)
-        print(pourris)
-      }
-    }
-    return (main, binder)
-  }()
+  }
+  return (main, binder)
+}()

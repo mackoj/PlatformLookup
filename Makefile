@@ -5,10 +5,13 @@ build:
 	swift build
 
 format:
-	swift-format -m format --configuration .swift-format -r -i Sources
+	swift-format -m format --configuration .swift-format -r -i **/*.swift
 
 lint:
-	swift-format -m lint --configuration .swift-format -r -i Sources
+	swift-format -m lint --configuration .swift-format -r -i **/*.swift
+
+generate-enum-properties:
+	generate-enum-properties **/*.swift
 
 gitignore-flush:
 	git rm -r --cached .
