@@ -30,4 +30,4 @@ test-macos:
 		-scheme PlatformLookup-Package \
 		-destination platform="macOS" \
 
-test-all: test-swift test-macos
+test: test-swift test-macos
