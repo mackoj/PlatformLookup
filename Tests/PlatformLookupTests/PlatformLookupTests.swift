@@ -156,10 +156,10 @@ final class PlatformLookupTests: XCTestCase {
   }
   func test_findAllDevice() {
     do {
-      var platforms = try PlatformLookup.findAllDevice(.appleTV)
+      var platforms = try PlatformLookup.findAllDevice(.appleWatch)
       XCTAssertGreaterThan(platforms.count, 0)
 
-      platforms = try PlatformLookup.findAllDevice(.appleTV, version: "6.1")
+      platforms = try PlatformLookup.findAllDevice(.appleWatch, version: "6.1")
       XCTAssertGreaterThan(platforms.count, 0)
       XCTAssertEqual(platforms.first?.devices.count, 4)
       XCTAssertEqual(platforms.first?.runtime.version, "6.1")
