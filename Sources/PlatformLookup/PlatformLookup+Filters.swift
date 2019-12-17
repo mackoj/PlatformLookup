@@ -22,7 +22,7 @@ extension PlatformLookup {
   /// - Parameter deviceName: <#deviceName description#>
   static public func filterDeviceName(_ deviceName: String) -> (
     (Device) -> Bool
-  ) { return { $0.name.contains(deviceName) } }
+  ) { return { $0.name.lowercased().contains(deviceName.lowercased()) } }
   /// <#Description#>
   /// - Parameters:
   ///   - deviceFamily: <#deviceFamily description#>
