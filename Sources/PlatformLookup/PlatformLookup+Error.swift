@@ -12,7 +12,7 @@ extension PlatformLookup {
     case unknow(runtime: String)
     /// A localized message describing what error occurred.
     public var errorDescription: String? {
-      switch self {//      case .invalidIndex:
+      switch self {  //      case .invalidIndex:
       //        return NSLocalizedString("Invalid Index", comment: "Invalid Index")
       //      case .failedToInitializeDataIsNotValid:
       //        return NSLocalizedString(
