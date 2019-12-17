@@ -1,6 +1,8 @@
 import Foundation
 import PlatformLookup
 
+extension String : Error {}
+
 let cliVersion = "1.0.0"
 
 func exe(_ args: [String]) throws {
@@ -25,6 +27,7 @@ func exe(_ args: [String]) throws {
     deviceFamily: deviceFamily
   )
   print(output)
+  print(platform.last!.devices.last!)
 }
 
 do {
