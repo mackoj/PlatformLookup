@@ -10,6 +10,7 @@ func exe(_ args: [String]) throws {
   var arguments = args
   var version: String?
   var name: String?
+  var showAll: Bool = false
   while arguments.isEmpty == false {
     let arg = arguments.removeFirst()
     switch arg {
@@ -20,14 +21,17 @@ func exe(_ args: [String]) throws {
       fputs(Usage, stdout)
       exit(EXIT_SUCCESS)
     case "-v": version = arguments.removeFirst()
+    case "-s": showAll = true
     default: name = arg
     }
   }
   guard let localName = name else { throw (Usage) }
-  let platform = try PlatformLookup.findAllDeviceNamed(localName, version: version)
+  let platforms = try PlatformLookup.findAllDeviceNamed(localName, version: version)
+  let platform = platforms.last!
   let deviceFamily = try PlatformLookup.deviceFamilyFrom(localName)
-  let output = try PlatformLookup.format(platform.last!, deviceFamily: deviceFamily)
-  fputs(output, stdout)
+  let output = try PlatformLookup.format(platform, deviceFamily: deviceFamily)
+  fputs(output + "\n", stdout)
+  if showAll { fputs(platform.description, stdout) }
 }
 
 do { try exe(Array(CommandLine.arguments.dropFirst())) }
