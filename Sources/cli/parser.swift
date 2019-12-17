@@ -88,7 +88,7 @@ let (kArgParser, kArgBinder): (ArgumentParser, ArgumentBinder<Command>) = {
   )
   _ = main.add(subparser: "version", usage: "", overview: versionOverview)
   _ = main.add(subparser: "help", usage: "", overview: helpOverview)
-  binder.bind(parser: main) { (commandOption, sub) in//    switch subcommand {
+  binder.bind(parser: main) { (commandOption, sub) in  //    switch subcommand {
     //    case "name":
     //      name = .name("toto")
     //    case "osVersion":
