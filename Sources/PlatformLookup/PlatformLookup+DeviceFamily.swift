@@ -18,9 +18,7 @@ extension PlatformLookup {
     public init?(rawValue input: String) {
       let lowercasedInput = input.lowercased()
       let filteredResult = DeviceFamily.allCases.filter { (it) -> Bool in
-        return DeviceFamily.variantes(it).contains {
-          lowercasedInput.contains($0.lowercased())
-        }
+        return DeviceFamily.variantes(it).contains { lowercasedInput.contains($0.lowercased()) }
       }
       if let first = filteredResult.first { self = first }
       else { return nil }

@@ -24,15 +24,9 @@ func exe(_ args: [String]) throws {
     }
   }
   guard let localName = name else { throw (Usage) }
-  let platform = try PlatformLookup.findAllDeviceNamed(
-    localName,
-    version: version
-  )
+  let platform = try PlatformLookup.findAllDeviceNamed(localName, version: version)
   let deviceFamily = try PlatformLookup.deviceFamilyFrom(localName)
-  let output = try PlatformLookup.format(
-    platform.last!,
-    deviceFamily: deviceFamily
-  )
+  let output = try PlatformLookup.format(platform.last!, deviceFamily: deviceFamily)
   fputs(output, stdout)
 }
 
