@@ -13,10 +13,10 @@ let package = Package(
     .library(name: "PlatformLookup", targets: ["PlatformLookup"]),
   ],
   dependencies: [
-    .package(
-      url: "https://github.com/apple/swift-tools-support-core.git",
-      .branch("master")
-    ),  // en attendant une release stable
+    //    .package(
+    //      url: "https://github.com/apple/swift-tools-support-core.git",
+    //      .branch("master")
+    //    ),  // en attendant une release stable
     .package(url: "https://github.com/mrackwitz/Version.git", from: "0.7.2"),
     .package(
       url: "https://github.com/pointfreeco/swift-snapshot-testing.git",
@@ -24,7 +24,13 @@ let package = Package(
     ),
   ],
   targets: [
-    .target(name: "cli", dependencies: ["PlatformLookup", "SwiftToolsSupport"]),
+    .target(
+      name: "cli",
+      dependencies: [
+        "PlatformLookup"  //,
+        //      "SwiftToolsSupport"
+      ]
+    ),
     .target(
       name: "PlatformLookup",
       dependencies: ["SimulatorControl", "Shell"]

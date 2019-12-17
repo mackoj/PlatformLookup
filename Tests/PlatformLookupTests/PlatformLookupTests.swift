@@ -159,6 +159,8 @@ final class PlatformLookupTests: XCTestCase {
         "iPad Pro (9.7-inch)"
       )
       XCTAssertGreaterThan(platforms.count, 0)
+      platforms = try PlatformLookup.findAllDeviceNamed("ipad")
+      XCTAssertGreaterThan(platforms.count, 0)
       platforms = try PlatformLookup.findAllDeviceNamed(
         "iPad Pro (9.7-inch)",
         version: "13.2"
@@ -174,10 +176,10 @@ final class PlatformLookupTests: XCTestCase {
   }
   func test_findAllDevice() {
     do {
-      var platforms = try PlatformLookup.findAllDevice(.appleWatch)
+      var platforms = try PlatformLookup.findAllDevice(.watch)
       XCTAssertGreaterThan(platforms.count, 0)
 
-      platforms = try PlatformLookup.findAllDevice(.appleWatch, version: "6.1")
+      platforms = try PlatformLookup.findAllDevice(.watch, version: "6.1")
       XCTAssertGreaterThan(platforms.count, 0)
       XCTAssertEqual(platforms.first?.devices.count, 4)
       XCTAssertEqual(platforms.first?.runtime.version, "6.1")
@@ -218,15 +220,6 @@ final class PlatformLookupTests: XCTestCase {
         error.localizedDescription,
         PlatformLookup.PlatformLookupError.failedToInitializeDataIsNotValid
           .localizedDescription
-      )
-    }
-
-    // not so sure about keeping this one
-    do { try PlatformLookup.instanciate(Data()) }
-    catch {
-      XCTAssertEqual(
-        error.localizedDescription,
-        "The data couldn’t be read because it isn’t in the correct format."
       )
     }
   }

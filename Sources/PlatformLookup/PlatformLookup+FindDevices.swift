@@ -5,11 +5,9 @@ extension PlatformLookup {
   static public func deviceFamilyFrom(_ deviceName: String) throws
     -> DeviceFamily
   {
-    guard
-      let deviceFamily = DeviceFamily.allCases.first(where: {
-        deviceName.contains($0.rawValue)
-      })
-    else { throw (PlatformLookupError.unknowDevice(deviceName)) }
+    guard let deviceFamily = DeviceFamily(rawValue: deviceName) else {
+      throw (PlatformLookupError.unknowDevice(deviceName))
+    }
     return deviceFamily
   }
   // MARK: - Find Devices
