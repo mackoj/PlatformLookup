@@ -4,15 +4,10 @@ import XCTest
 @testable import PlatformLookup
 
 final class PlatformLookupTests: XCTestCase {
-  override func setUp() {
-    try? PlatformLookup.instanciate(SimulatorControlJSONData)
-  }
+  override func setUp() { try? PlatformLookup.instanciate(SimulatorControlJSONData) }
   func test_decodeXcrunSimctlJSONData() {
     do {
-      let simctl = try JSONDecoder().decode(
-        SimulatorControl.self,
-        from: SimulatorControlJSONData
-      )
+      let simctl = try JSONDecoder().decode(SimulatorControl.self, from: SimulatorControlJSONData)
       let runtimesSorted = simctl.runtimes?.sorted(by: >)
       if let firstRuntime = runtimesSorted?.first {
         let testRuntime = Runtime(
@@ -51,9 +46,7 @@ final class PlatformLookupTests: XCTestCase {
     XCTAssertEqual(output, "iOS Simulator,name=iPhone 11 Pro Max,OS=13.2")
   }
   func test_findADeviceForLastOSVersion_platform() {
-    let platform: Platform? = try? PlatformLookup.findADeviceForLastOSVersion(
-      .iPhone
-    )
+    let platform: Platform? = try? PlatformLookup.findADeviceForLastOSVersion(.iPhone)
     let device = Device(
       state: "Shutdown",
       isAvailable: true,
@@ -142,34 +135,21 @@ final class PlatformLookupTests: XCTestCase {
       buildversion: "17S83"
     )
     let p4 = Platform(runtime: runtime, device: device)
-    for (expectedPlatform, aCase) in zip(
-      [p1, p2, p3, p4],
-      PlatformLookup.DeviceFamily.allCases
-    ) {
-      let platform: Platform? = try? PlatformLookup.findADeviceForLastOSVersion(
-        aCase
-      )
+    for (expectedPlatform, aCase) in zip([p1, p2, p3, p4], PlatformLookup.DeviceFamily.allCases) {
+      let platform: Platform? = try? PlatformLookup.findADeviceForLastOSVersion(aCase)
       XCTAssertEqual(platform?.runtime, expectedPlatform.runtime)
       XCTAssertEqual(platform?.devices.last, expectedPlatform.devices.last)
     }
   }
   func test_findAllDeviceNamed() {
     do {
-      var platforms = try PlatformLookup.findAllDeviceNamed(
-        "iPad Pro (9.7-inch)"
-      )
+      var platforms = try PlatformLookup.findAllDeviceNamed("iPad Pro (9.7-inch)")
       XCTAssertGreaterThan(platforms.count, 0)
       platforms = try PlatformLookup.findAllDeviceNamed("ipad")
       XCTAssertGreaterThan(platforms.count, 0)
-      platforms = try PlatformLookup.findAllDeviceNamed(
-        "iPad Pro (9.7-inch)",
-        version: "13.2"
-      )
+      platforms = try PlatformLookup.findAllDeviceNamed("iPad Pro (9.7-inch)", version: "13.2")
       XCTAssertEqual(platforms.count, 1)
-      XCTAssertEqual(
-        platforms.first?.devices.first?.name,
-        "iPad Pro (9.7-inch)"
-      )
+      XCTAssertEqual(platforms.first?.devices.first?.name, "iPad Pro (9.7-inch)")
       XCTAssertEqual(platforms.first?.runtime.version, "13.2")
     }
     catch { XCTFail(error.localizedDescription) }
@@ -195,16 +175,12 @@ final class PlatformLookupTests: XCTestCase {
     catch {
       XCTAssertEqual(
         error.localizedDescription,
-        PlatformLookup.PlatformLookupError.unknowDevice("Pikachu 22")
-          .localizedDescription
+        PlatformLookup.PlatformLookupError.unknowDevice("Pikachu 22").localizedDescription
       )
     }
     // PlatformLookupError.noRuntimeFound
     do {
-      let platforms = try PlatformLookup.findAllDeviceNamed(
-        "iPhone",
-        version: "0.1"
-      )
+      let platforms = try PlatformLookup.findAllDeviceNamed("iPhone", version: "0.1")
       XCTAssertEqual(platforms.count, 0)
     }
     catch {
@@ -218,25 +194,16 @@ final class PlatformLookupTests: XCTestCase {
     catch {
       XCTAssertEqual(
         error.localizedDescription,
-        PlatformLookup.PlatformLookupError.failedToInitializeDataIsNotValid
-          .localizedDescription
+        PlatformLookup.PlatformLookupError.failedToInitializeDataIsNotValid.localizedDescription
       )
     }
   }
   static var allTests = [
     ("test_decodeXcrunSimctlJSONData", test_decodeXcrunSimctlJSONData),
-    (
-      "test_findADeviceForLastOSVersion_string",
-      test_findADeviceForLastOSVersion_string
-    ),
-    (
-      "test_findADeviceForLastOSVersion_platform",
-      test_findADeviceForLastOSVersion_platform
-    ),
-    (
-      "test_findADeviceForLastOSVersion_allCases",
-      test_findADeviceForLastOSVersion_allCases
-    ), ("test_findAllDeviceNamed", test_findAllDeviceNamed),
+    ("test_findADeviceForLastOSVersion_string", test_findADeviceForLastOSVersion_string),
+    ("test_findADeviceForLastOSVersion_platform", test_findADeviceForLastOSVersion_platform),
+    ("test_findADeviceForLastOSVersion_allCases", test_findADeviceForLastOSVersion_allCases),
+    ("test_findAllDeviceNamed", test_findAllDeviceNamed),
     ("test_findAllDevice", test_findAllDevice),
   ]
 }
