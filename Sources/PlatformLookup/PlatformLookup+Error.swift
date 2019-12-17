@@ -41,10 +41,13 @@ extension PlatformLookup {
         #endif
         return NSLocalizedString(message, comment: "Unknown Runtime")
       case .unknowDevice(let device):
-        return NSLocalizedString("Unknown \(device)", comment: "unknown device")
+        return NSLocalizedString(
+          "Unknown device: \(device)",
+          comment: "unknown device"
+        )
       case .unknowRuntime(let runtime):
         return NSLocalizedString(
-          "Unknown \(runtime)",
+          "Unknown runtime: \(runtime)",
           comment: "Unknown runtime"
         )
       }
