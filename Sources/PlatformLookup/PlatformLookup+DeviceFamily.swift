@@ -28,15 +28,15 @@ extension PlatformLookup {
     var os: String {
       switch self {
       case .iPhone, .iPad: return "iOS"
-      case .tv: return "tvOS"
-      case .watch: return "watchOS"
+      case .appleTV: return "tvOS"
+      case .appleWatch: return "watchOS"
       }
     }
     var simulatorName: String {
       switch self {
       case .iPhone, .iPad: return "iOS Simulator"
-      case .tv: return "tvOS Simulator"
-      case .watch: return "watchOS Simulator"
+      case .appleTV: return "tvOS Simulator"
+      case .appleWatch: return "watchOS Simulator"
       }
     }
   }
