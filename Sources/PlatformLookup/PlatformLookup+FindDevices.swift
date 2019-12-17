@@ -2,9 +2,7 @@ import Foundation
 import SimulatorControl
 
 extension PlatformLookup {
-  static public func deviceFamilyFrom(_ deviceName: String) throws
-    -> DeviceFamily
-  {
+  static public func deviceFamilyFrom(_ deviceName: String) throws -> DeviceFamily {
     guard let deviceFamily = DeviceFamily(rawValue: deviceName) else {
       throw (PlatformLookupError.unknowDevice(deviceName))
     }
@@ -15,10 +13,9 @@ extension PlatformLookup {
   /// - Parameters:
   ///   - deviceName: <#deviceName description#>
   ///   - version: <#version description#>
-  static public func findAllDeviceNamed(
-    _ deviceName: String,
-    version: String? = nil
-  ) throws -> [Platform] {
+  static public func findAllDeviceNamed(_ deviceName: String, version: String? = nil) throws
+    -> [Platform]
+  {
     let deviceFamily = try deviceFamilyFrom(deviceName)
     let platforms = try PlatformLookup.shared?.getAllDevices(
       with: filterDeviceName(deviceName),
@@ -28,8 +25,7 @@ extension PlatformLookup {
       throw (
         PlatformLookupError.noResultForThisCombinaison(
           device: deviceName,
-          runtime:
-            "os: \(deviceFamily.os), version: \(version ?? "<not defined>")"
+          runtime: "os: \(deviceFamily.os), version: \(version ?? "<not defined>")"
         )
       )
     }
@@ -40,10 +36,9 @@ extension PlatformLookup {
   /// - Parameters:
   ///   - deviceName: <#deviceName description#>
   ///   - version: <#version description#>
-  static public func findAllDevice(
-    _ deviceFamily: DeviceFamily = .iPhone,
-    version: String? = nil
-  ) throws -> [Platform] {
+  static public func findAllDevice(_ deviceFamily: DeviceFamily = .iPhone, version: String? = nil)
+    throws -> [Platform]
+  {
     let platforms = try PlatformLookup.shared?.getAllDevices(
       with: filterDeviceFamily(deviceFamily),
       runtimeFilter: filterRuntime(deviceFamily.os, version: version)
@@ -52,8 +47,7 @@ extension PlatformLookup {
       throw (
         PlatformLookupError.noResultForThisCombinaison(
           device: deviceFamily.rawValue,
-          runtime:
-            "os: \(deviceFamily.os), version: \(version ?? "<not defined>")"
+          runtime: "os: \(deviceFamily.os), version: \(version ?? "<not defined>")"
         )
       )
     }
@@ -63,9 +57,7 @@ extension PlatformLookup {
   /// Trouve un device pour la derniere version de l'OS par default cherche un iPhone
   /// <#Description#>
   /// - Parameter deviceFamily: <#deviceFamily description#>
-  static public func findADeviceForLastOSVersion(_ deviceFamily: DeviceFamily)
-    throws -> Platform
-  {
+  static public func findADeviceForLastOSVersion(_ deviceFamily: DeviceFamily) throws -> Platform {
     let platform = try PlatformLookup.shared?.getAllDevices(
       with: filterDeviceFamily(deviceFamily),
       runtimeFilter: filterRuntime(deviceFamily.os, version: nil)
@@ -93,20 +85,17 @@ extension PlatformLookup {
     let device: Device
     if let idx = deviceIndex { device = platform.devices[idx] }
     else { device = platform.devices.last! }
-    return
-      "\(deviceFamily.simulatorName),name=\(device.name),OS=\(platform.runtime.version)"
+    return "\(deviceFamily.simulatorName),name=\(device.name),OS=\(platform.runtime.version)"
   }
   // MARK: - Private
   /// <#Description#>
   /// - Parameters:
   ///   - deviceFilter: <#deviceFilter description#>
   ///   - runtimeFilter: <#runtimeFilter description#>
-  private func getAllDevices(
-    with deviceFilter: DeviceFilter,
-    runtimeFilter: RuntimeFilter
-  ) throws -> [Platform] {
-    guard let filteredRuntimes = simctl.runtimes?.filter(runtimeFilter),
-      filteredRuntimes.count > 0
+  private func getAllDevices(with deviceFilter: DeviceFilter, runtimeFilter: RuntimeFilter) throws
+    -> [Platform]
+  {
+    guard let filteredRuntimes = simctl.runtimes?.filter(runtimeFilter), filteredRuntimes.count > 0
     else { throw (PlatformLookupError.noRuntimeFound) }
     let sortedRuntimes = filteredRuntimes.sorted(by: <)
 
