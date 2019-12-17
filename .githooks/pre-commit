@@ -5,7 +5,9 @@ if ! [ -x "$(command -v swift)" ]; then
   echo 'Error: swift is not installed.' >&2
   echo 'You should install it before continuing' >&2
   exit 1
-elif ! [ -x "$(command -v swift-format)" ]; then
+fi
+
+if ! [ -x "$(command -v swift-format)" ]; then
   echo 'Error: swift-format is not installed.' >&2
   git clone https://github.com/apple/swift-format.git /tmp/__hawkci__/swift-format
   cd /tmp/__hawkci__/swift-format
@@ -20,6 +22,13 @@ else
   echo "Auto-Formatting..."
   git diff --diff-filter=d --cached --name-only | grep -E '\.(swift)$' | xargs -I{} swift-format -m format -r --configuration .swift-format -i {}
   echo "You might need to re-commit to commit the updated formmated code"
+fi
+
+if ! [ -x "$(command -v generate-enum-properties)" ]; then
+  echo "Installing swift-enum-properties"
+  git clone https://github.com/pointfreeco/swift-enum-properties.git /tmp/__hawkci__/swift-enum-properties
+  cd /tmp/__hawkci__/swift-enum-properties
+  make install
 fi
 
 #

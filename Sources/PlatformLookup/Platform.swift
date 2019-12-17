@@ -3,8 +3,8 @@ import SimulatorControl
 
 /// <#Description#>
 public struct Platform: Equatable, Codable {
-  let devices: [Device]
-  let runtime: Runtime
+  public let devices: [Device]
+  public let runtime: Runtime
 
   /// <#Description#>
   /// - Parameters:

@@ -1,4 +1,3 @@
-import SnapshotTesting
 import XCTest
 
 @testable import Shell
@@ -7,8 +6,10 @@ final class ShellTests: XCTestCase {
   func test_SimpleTest() {
     do {
       try shell("touch testFile.txt")
-      let lsOutput = try shell("ls testFile.txt")
-      assertSnapshot(matching: lsOutput, as: .description)
+      var lsOutput = try shell("ls testFile.txt")
+      // remove the \n
+      _ = lsOutput.removeLast()
+      XCTAssertEqual(lsOutput, "testFile.txt")
     } catch { XCTAssert(false, error.localizedDescription) }
   }
 

@@ -15,5 +15,12 @@ extension PlatformLookup {
       case .appleWatch: return "watchOS"
       }
     }
+    var simulatorName: String {
+      switch self {
+      case .iPhone, .iPad: return "iOS Simulator"
+      case .appleTV: return "tvOS Simulator"
+      case .appleWatch: return "watchOS Simulator"
+      }
+    }
   }
 }
