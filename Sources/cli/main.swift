@@ -1,7 +1,7 @@
 import Foundation
 import PlatformLookup
 
-extension String : Error {}
+extension String: Error {}
 
 let cliVersion = "1.0.0"
 
