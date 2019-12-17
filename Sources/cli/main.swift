@@ -1,11 +1,6 @@
 import Foundation
 import PlatformLookup
 
-let CliVersion = "1.0.0"
-let Usage = "./plCli iPhone -v 13.0"
-
-extension String: Error {}
-
 func exe(_ args: [String]) throws {
   var arguments = args
   var version: String?
@@ -15,7 +10,7 @@ func exe(_ args: [String]) throws {
     let arg = arguments.removeFirst()
     switch arg {
     case "--version":
-      fputs(CliVersion, stdout)
+      fputs(Version, stdout)
       exit(EXIT_SUCCESS)
     case "--help":
       fputs(Usage, stdout)
@@ -25,7 +20,7 @@ func exe(_ args: [String]) throws {
     default: name = arg
     }
   }
-  guard let localName = name else { throw (Usage) }
+  guard let localName = name else { throw (Overview) }
   let platforms = try PlatformLookup.findAllDeviceNamed(localName, version: version)
   let platform = platforms.last!
   let deviceFamily = try PlatformLookup.deviceFamilyFrom(localName)
