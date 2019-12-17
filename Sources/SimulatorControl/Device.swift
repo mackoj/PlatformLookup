@@ -26,6 +26,6 @@ public struct Device: Equatable, Codable {
     self.isAvailable = isAvailable ?? false
     self.name = name
     self.udid = udid
-    self.availabilityError = availabilityError
+    self.availabilityError = availabilityError ?? ""
   }
 }

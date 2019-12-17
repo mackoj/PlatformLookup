@@ -28,7 +28,7 @@ func exe(_ args: [String]) throws {
   let platform = platforms.last!
   let deviceFamily = try PlatformLookup.deviceFamilyFrom(localName)
   let output = try PlatformLookup.format(platform, deviceFamily: deviceFamily)
-  fputs(output, stdout)
+  fputs(output+"\n", stdout)
   fputs(platform.devices.last!.description, stdout)
 }
 
