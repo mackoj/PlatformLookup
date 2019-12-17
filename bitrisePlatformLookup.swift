@@ -1,3 +1,5 @@
+#!/usr/bin/swift sh
+
 import Foundation
 import PlatformLookup  // mackoj/SimulatorControl
 import Shell
@@ -20,10 +22,9 @@ func findDevicePlatform(_ args: [String]) throws {
   print(platformString)
   exit(EXIT_SUCCESS)
 }
-func test() {
-  do { try findDevicePlatform(CommandLine.arguments) }
-  catch {
-    print(error.localizedDescription)
-    exit(EXIT_FAILURE)
-  }
+
+do { try findDevicePlatform(CommandLine.arguments) }
+catch {
+  print(error.localizedDescription)
+  exit(EXIT_FAILURE)
 }
