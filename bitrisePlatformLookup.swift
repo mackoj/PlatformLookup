@@ -23,6 +23,9 @@ func performCommand(_ command : Command) throws {
   _ = try shell(
     "envman add --key PLATFORM_LOOKUP_PLATFORM --value \"\(output)\""
   )
+  _ = try shell(
+    "envman add --key PLATFORM_LOOKUP_SIMULATOR_NAME --value \"\(deviceFamily.simulatorName)\""
+  )
   fputs(output + "\n", stdout)
 }
 
