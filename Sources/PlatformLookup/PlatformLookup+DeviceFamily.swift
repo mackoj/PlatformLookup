@@ -12,7 +12,7 @@ extension PlatformLookup {
       case .iPhone: return ["iPhone"]
       case .iPad: return ["iPad"]
       case .appleTV: return ["tv", "apple tv"]
-      case .appleWatch: return ["watch", "apple watch"]
+      case .appleWatch: return ["watch", "apple watch", "series"]
       }
     }
     public init?(rawValue input: String) {
