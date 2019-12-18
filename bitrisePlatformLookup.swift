@@ -2,29 +2,42 @@
 
 import Foundation
 import PlatformLookup  // mackoj/SimulatorControl
+import CommandParser
 import Shell
 
-func findDevicePlatform(_ args: [String]) throws {
-  let platform = try PlatformLookup.findADeviceForLastOSVersion(.iPhone)
+func performCommand(_ command : Command) throws {
+  let platforms = try PlatformLookup.findAllDeviceNamed(command.name, version: command.runtimeVersion)
+  let platform = platforms.last!
+  let deviceFamily = try PlatformLookup.deviceFamilyFrom(command.name)
+  let output = try PlatformLookup.format(platform, deviceFamily: deviceFamily)
+
   _ = try shell(
     "envman add --key PLATFORM_LOOKUP_DEVICE_MODEL --value \"\(platform.devices.last!.name)\""
   )
   _ = try shell(
     "envman add --key PLATFORM_LOOKUP_OS_VERSION --value \"\(platform.runtime.version)\""
   )
-  let platformString = try PlatformLookup.format(
-    platform,
-    deviceFamily: .iPhone
+  _ = try shell(
+    "envman add --key PLATFORM_LOOKUP_DEVICE_UDID --value \"\(platform.devices.last!.udid)\""
   )
   _ = try shell(
-    "envman add --key PLATFORM_LOOKUP_PLATFORM --value \"\(platformString)\""
+    "envman add --key PLATFORM_LOOKUP_PLATFORM --value \"\(output)\""
   )
-  print(platformString)
-  exit(EXIT_SUCCESS)
+  fputs(output + "\n", stdout)
 }
 
-do { try findDevicePlatform(CommandLine.arguments) }
-catch {
-  print(error.localizedDescription)
+func exe(_ args: [String]) throws {
+  let command = try Command(args)
+  try performCommand(command)
+}
+
+do { try exe(Array(CommandLine.arguments.dropFirst())) }
+catch let error as PlatformLookup.PlatformLookupError {
+  fputs(error.localizedDescription, stderr)
+  exit(EXIT_FAILURE)
+} catch let error as String {
+  fputs(error, stderr)
+  exit(EXIT_FAILURE)
+} catch {
   exit(EXIT_FAILURE)
 }
