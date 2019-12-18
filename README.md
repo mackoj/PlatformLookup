@@ -2,11 +2,11 @@
 
 Being able to lift platform information in bitrise in order to simplify maintenance.
 
-PLATFORM_LOOKUP_DEVICE_MODEL : Device model like `iPad Air (3rd generation)`
-PLATFORM_LOOKUP_OS_VERSION : Runtime os version `13.3`
-PLATFORM_LOOKUP_DEVICE_UDID : Simulator device UDID `97FF12DC-7204-4066-A95E-A2B0E6FF4F62`
-PLATFORM_LOOKUP_PLATFORM : Platform parameter for xcodebuild `iOS Simulator,name=iPad Air (3rd generation),OS=13.3`
-PLATFORM_LOOKUP_SIMULATOR_NAME : Simulator name `iOS Simulator`
+- PLATFORM_LOOKUP_DEVICE_MODEL : Device model like `iPad Air (3rd generation)`
+- PLATFORM_LOOKUP_OS_VERSION : Runtime os version `13.3`
+- PLATFORM_LOOKUP_DEVICE_UDID : Simulator device UDID `97FF12DC-7204-4066-A95E-A2B0E6FF4F62`
+- PLATFORM_LOOKUP_PLATFORM : Platform parameter for xcodebuild `iOS Simulator,name=iPad Air (3rd generation),OS=13.3`
+- PLATFORM_LOOKUP_SIMULATOR_NAME : Simulator name `iOS Simulator`
 
 It can use the same parameter as `Cli`.
 
