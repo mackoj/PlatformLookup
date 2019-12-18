@@ -14,11 +14,7 @@ let package = Package(
     .library(name: "PlatformLookup", targets: ["PlatformLookup"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/mrackwitz/Version.git", from: "0.7.2"),
-    .package(
-      url: "https://github.com/pointfreeco/swift-snapshot-testing.git",
-      from: "1.7.0"
-    ),
+    .package(url: "https://github.com/mrackwitz/Version.git", from: "0.7.2")
   ],
   targets: [
     .target(name: "cli", dependencies: ["PlatformLookup", "CommandParser"]),
@@ -30,7 +26,7 @@ let package = Package(
     .target(name: "CommandParser", dependencies: ["PlatformLookup"]),
     .testTarget(
       name: "PlatformLookupTests",
-      dependencies: ["PlatformLookup", "SnapshotTesting"]
+      dependencies: ["PlatformLookup"]
     ), .testTarget(name: "ShellTests", dependencies: ["Shell"]),
   ],
   swiftLanguageVersions: [.v5]

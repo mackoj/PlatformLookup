@@ -1,8 +1,8 @@
 #!/usr/bin/swift sh
 
 import Foundation
-import PlatformLookup  // mackoj/SimulatorControl
-import CommandParser
+import CommandParser    // mackoj/SimulatorControl
+import PlatformLookup
 import Shell
 
 func performCommand(_ command : Command) throws {
