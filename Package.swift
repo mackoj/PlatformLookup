@@ -8,15 +8,12 @@ let package = Package(
   platforms: [.macOS(.v10_14)],
   products: [
     .executable(name: "cli", targets: ["cli"]),
+    .library(name: "CommandParser", targets: ["CommandParser"]),
     .library(name: "SimulatorControl", targets: ["SimulatorControl"]),
     .library(name: "Shell", targets: ["Shell"]),
     .library(name: "PlatformLookup", targets: ["PlatformLookup"]),
   ],
   dependencies: [
-    //    .package(
-    //      url: "https://github.com/apple/swift-tools-support-core.git",
-    //      .branch("master")
-    //    ),  // en attendant une release stable
     .package(url: "https://github.com/mrackwitz/Version.git", from: "0.7.2"),
     .package(
       url: "https://github.com/pointfreeco/swift-snapshot-testing.git",
@@ -24,18 +21,13 @@ let package = Package(
     ),
   ],
   targets: [
-    .target(
-      name: "cli",
-      dependencies: [
-        "PlatformLookup"  //,
-        //      "SwiftToolsSupport"
-      ]
-    ),
+    .target(name: "cli", dependencies: ["PlatformLookup", "CommandParser"]),
     .target(
       name: "PlatformLookup",
       dependencies: ["SimulatorControl", "Shell"]
     ), .target(name: "Shell"),
     .target(name: "SimulatorControl", dependencies: ["Version"]),
+    .target(name: "CommandParser", dependencies: ["PlatformLookup"]),
     .testTarget(
       name: "PlatformLookupTests",
       dependencies: ["PlatformLookup", "SnapshotTesting"]
