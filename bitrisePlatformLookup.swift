@@ -1,7 +1,7 @@
 #!/usr/bin/swift sh
 
 import Foundation
-import PlatformLookup  // mackoj/SimulatorControl
+import PlatformLookup  // mackoj/SimulatorControl == 3715ae9
 import CommandParser
 import Shell
 
