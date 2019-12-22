@@ -3,6 +3,8 @@ import SimulatorControl
 import NonEmpty
 
 extension PlatformLookup {
+  /// <#Description#>
+  /// - Parameter deviceName: <#deviceName description#>
   static public func deviceFamilyFrom(_ deviceName: String) throws -> DeviceFamily {
     guard let deviceFamily = DeviceFamily(rawValue: deviceName) else {
       throw (PlatformLookupError.unknowDevice(deviceName))
