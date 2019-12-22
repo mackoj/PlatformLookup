@@ -1,12 +1,15 @@
 import Foundation
 import PlatformLookup
 
+/// <#Description#>
 public struct Command {
   public let name: String
   public let runtimeVersion: String?
   public let showAll: Bool
   public let version: Bool
   public let help: Bool
+  /// <#Description#>
+  /// - Parameter args: <#args description#>
   public init(_ args: [String]) throws {
     var arguments = args
     var pRuntimeVersion: String?
