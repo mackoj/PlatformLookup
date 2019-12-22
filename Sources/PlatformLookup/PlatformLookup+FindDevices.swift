@@ -1,5 +1,6 @@
 import Foundation
 import SimulatorControl
+import NonEmpty
 
 extension PlatformLookup {
   static public func deviceFamilyFrom(_ deviceName: String) throws -> DeviceFamily {
@@ -14,7 +15,7 @@ extension PlatformLookup {
   ///   - deviceName: <#deviceName description#>
   ///   - version: <#version description#>
   static public func findAllDeviceNamed(_ deviceName: String, version: String? = nil) throws
-    -> [Platform]
+    -> NonEmptyArray<Platform>
   {
     let deviceFamily = try deviceFamilyFrom(deviceName)
     let platforms = try PlatformLookup.shared?.getAllDevices(
@@ -37,7 +38,7 @@ extension PlatformLookup {
   ///   - deviceName: <#deviceName description#>
   ///   - version: <#version description#>
   static public func findAllDevice(_ deviceFamily: DeviceFamily = .iPhone, version: String? = nil)
-    throws -> [Platform]
+    throws -> NonEmptyArray<Platform>
   {
     let platforms = try PlatformLookup.shared?.getAllDevices(
       with: filterDeviceFamily(deviceFamily),
@@ -93,17 +94,22 @@ extension PlatformLookup {
   ///   - deviceFilter: <#deviceFilter description#>
   ///   - runtimeFilter: <#runtimeFilter description#>
   private func getAllDevices(with deviceFilter: DeviceFilter, runtimeFilter: RuntimeFilter) throws
-    -> [Platform]
+    -> NonEmptyArray<Platform>
   {
     guard let filteredRuntimes = simctl.runtimes?.filter(runtimeFilter), filteredRuntimes.count > 0
     else { throw (PlatformLookupError.noRuntimeFound) }
     let sortedRuntimes = filteredRuntimes.sorted(by: <)
 
-    return sortedRuntimes.compactMap { (runtime) -> Platform? in
+    var runtimes = sortedRuntimes.compactMap { (runtime) -> Platform? in
       let devices = simctl.devices?[runtime.identifier] ?? []
-      let filteredDevices = devices.filter(deviceFilter)
-      guard filteredDevices.isEmpty == false else { return nil }
-      return Platform(runtime: runtime, devices: filteredDevices)
+      var filteredDevices = devices.filter(deviceFilter)
+      guard let head = filteredDevices.first else { return nil }
+      _ = filteredDevices.removeFirst()
+      let nonEmptyFilteredDevices = NonEmptyArray<Device>(head, filteredDevices)
+      return Platform(runtime: runtime, devices: nonEmptyFilteredDevices)
     }
+    guard let head = runtimes.first else { throw(PlatformLookupError.noRuntimeFound) }
+    _ = runtimes.removeFirst()
+    return NonEmptyArray<Platform>(head, runtimes)
   }
 }

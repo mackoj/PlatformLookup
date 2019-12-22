@@ -1,9 +1,10 @@
 import Foundation
 import SimulatorControl
+import NonEmpty
 
 /// <#Description#>
 public struct Platform: Equatable, Codable {
-  public let devices: [Device]
+  public let devices: NonEmptyArray<Device>
   public let runtime: Runtime
 
   /// <#Description#>
@@ -11,7 +12,7 @@ public struct Platform: Equatable, Codable {
   ///   - runtime: <#runtime description#>
   ///   - device: <#device description#>
   init(runtime: Runtime, device: Device) {
-    self.devices = [device]
+    self.devices = NonEmptyArray<Device>(device)
     self.runtime = runtime
   }
 
@@ -19,7 +20,7 @@ public struct Platform: Equatable, Codable {
   /// - Parameters:
   ///   - runtime: <#runtime description#>
   ///   - devices: <#devices description#>
-  init(runtime: Runtime, devices: [Device]) {
+  init(runtime: Runtime, devices: NonEmptyArray<Device>) {
     self.devices = devices
     self.runtime = runtime
   }

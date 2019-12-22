@@ -14,13 +14,14 @@ let package = Package(
     .library(name: "PlatformLookup", targets: ["PlatformLookup"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/mrackwitz/Version.git", from: "0.7.2")
+    .package(url: "https://github.com/mrackwitz/Version.git", from: "0.7.2"),
+    .package(url: "https://github.com/pointfreeco/swift-nonempty.git", from: "0.2.0")
   ],
   targets: [
     .target(name: "cli", dependencies: ["PlatformLookup", "CommandParser"]),
     .target(
       name: "PlatformLookup",
-      dependencies: ["SimulatorControl", "Shell"]
+      dependencies: ["SimulatorControl", "Shell", "NonEmpty"]
     ), .target(name: "Shell"),
     .target(name: "SimulatorControl", dependencies: ["Version"]),
     .target(name: "CommandParser", dependencies: ["PlatformLookup"]),
