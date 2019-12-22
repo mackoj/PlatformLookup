@@ -102,7 +102,7 @@ extension PlatformLookup {
     return sortedRuntimes.compactMap { (runtime) -> Platform? in
       let devices = simctl.devices?[runtime.identifier] ?? []
       let filteredDevices = devices.filter(deviceFilter)
-      guard filteredDevices.count > 0 else { return nil }
+      guard filteredDevices.isEmpty == false else { return nil }
       return Platform(runtime: runtime, devices: filteredDevices)
     }
   }
