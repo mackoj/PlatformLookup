@@ -108,7 +108,7 @@ extension PlatformLookup {
       let nonEmptyFilteredDevices = NonEmptyArray<Device>(head, filteredDevices)
       return Platform(runtime: runtime, devices: nonEmptyFilteredDevices)
     }
-    guard let head = runtimes.first else { throw(PlatformLookupError.noRuntimeFound) }
+    guard let head = runtimes.first else { throw (PlatformLookupError.noRuntimeFound) }
     _ = runtimes.removeFirst()
     return NonEmptyArray<Platform>(head, runtimes)
   }
