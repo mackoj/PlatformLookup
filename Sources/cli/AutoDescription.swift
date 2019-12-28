@@ -1,10 +1,3 @@
-//
-//  Any+Description.swift
-//  PlatformLookup
-//
-//  Created by Jeffrey Macko on 28/12/2019.
-//
-
 import Foundation
 
 // Most of the code here as be taken from https://github.com/pointfreeco/swift-snapshot-testing/blob/master/Sources/SnapshotTesting/Snapshotting/Any.swift
