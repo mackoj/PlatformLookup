@@ -1,6 +1,7 @@
 import Foundation
 import SimulatorControl
 import PlatformLookup
+import AutomaticDescription
 
 extension Device: CustomStringConvertible {}
 extension Devicetype: CustomStringConvertible {}
