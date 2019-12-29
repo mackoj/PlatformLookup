@@ -10,6 +10,7 @@ final class ShellTests: XCTestCase {
       // remove the \n
       _ = lsOutput.removeLast()
       XCTAssertEqual(lsOutput, "testFile.txt")
+      _ = try shell("rm testFile.txt")
     }
     catch { XCTAssert(false, error.localizedDescription) }
   }
