@@ -4,6 +4,7 @@
 if ! [ -x "$(command -v swift)" ]; then
   echo 'Error: swift is not installed.' >&2
   echo 'You should install it before continuing' >&2
+  echo 'xcode-select --install'
   exit 1
 fi
 
