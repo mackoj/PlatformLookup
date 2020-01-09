@@ -8,6 +8,7 @@ let package = Package(
   platforms: [.macOS(.v10_14)],
   products: [
     .executable(name: "cli", targets: ["cli"]),
+    .library(name: "AutomaticDescription", targets: ["AutomaticDescription"]),
     .library(name: "CommandParser", targets: ["CommandParser"]),
     .library(name: "SimulatorControl", targets: ["SimulatorControl"]),
     .library(name: "Shell", targets: ["Shell"]),
@@ -18,12 +19,13 @@ let package = Package(
     .package(url: "https://github.com/pointfreeco/swift-nonempty.git", from: "0.2.0")
   ],
   targets: [
-    .target(name: "cli", dependencies: ["PlatformLookup", "CommandParser"]),
+    .target(name: "cli", dependencies: ["PlatformLookup", "CommandParser", "AutomaticDescription"]),
     .target(
       name: "PlatformLookup",
       dependencies: ["SimulatorControl", "Shell", "NonEmpty"]
     ), .target(name: "Shell"),
     .target(name: "SimulatorControl", dependencies: ["Version"]),
+    .target(name: "AutomaticDescription"),
     .target(name: "CommandParser", dependencies: ["PlatformLookup"]),
     .testTarget(
       name: "PlatformLookupTests",

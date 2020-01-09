@@ -10,13 +10,14 @@ fi
 
 if ! [ -x "$(command -v swift-format)" ]; then
   echo 'Error: swift-format is not installed.' >&2
-  git clone https://github.com/apple/swift-format.git /tmp/__hawkci__/swift-format
+  rm -rf /tmp/__hawkci__/swift-format
+  rm -f /usr/local/bin/swift-format
+  rm -f /usr/local/bin/generate-pipeline
+  git clone --single-branch --branch swift-5.1-branch https://github.com/apple/swift-format.git /tmp/__hawkci__/swift-format
   cd /tmp/__hawkci__/swift-format
   swift build -c release
-  cp .build/release/swift-format /Applications/Xcode.app/Contents/Developer/usr/bin
-  ln -s /Applications/Xcode.app/Contents/Developer/usr/bin/swift-format /usr/local/bin/swift-format
-  cp .build/release/generate-pipeline /Applications/Xcode.app/Contents/Developer/usr/bin
-  ln -s /Applications/Xcode.app/Contents/Developer/usr/bin/generate-pipeline /usr/local/bin/generate-pipeline
+  cp /tmp/__hawkci__/swift-format/.build/release/swift-format /usr/local/bin/swift-format
+  cp /tmp/__hawkci__/swift-format/.build/release/generate-pipeline /usr/local/bin/generate-pipeline
 else
   echo "Linting..."
   git diff --diff-filter=d --cached --name-only | grep -E 'Sources.*.(swift)$' | xargs -I{} swift-format -m lint --configuration .swift-format {}
