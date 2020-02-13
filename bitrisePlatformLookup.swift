@@ -1,7 +1,7 @@
 #!/usr/bin/swift sh
 
 import Foundation
-import CommandParser    // mackoj/PlatformLookup
+import CommandParser // https://github.com/mackoj/PlatformLookup.git == 0.9.5
 import PlatformLookup
 import Shell
 
