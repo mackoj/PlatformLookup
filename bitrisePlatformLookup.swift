@@ -1,7 +1,7 @@
 #!/usr/bin/swift sh
 
 import Foundation
-import CommandParser    // mackoj/SimulatorControl
+import CommandParser    // mackoj/PlatformLookup
 import PlatformLookup
 import Shell
 
