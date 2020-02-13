@@ -46,7 +46,7 @@ This package help to find/filter/sort all devices and runtimes available in xcru
 #!/usr/bin/swift sh
 
 import Foundation
-import PlatformLookup  // mackoj/SimulatorControl
+import PlatformLookup  // @mackoj
 
 func findDevicePlatform(_ args: [String]) throws {
   let platform = try PlatformLookup.findADeviceForLastOSVersion(.iPhone)
