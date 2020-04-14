@@ -14,7 +14,8 @@ struct PlatformLookupCLI: ParsableCommand {
   @Flag(help:"Share info to Bitrise envman.") public var shareToEnvman: Bool
 
   @Flag(help:"Print tool version.") public var version: Bool
-  @Flag(help:"Print in the other form.(ex: platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.4\")") public var printWithPlatform: Bool
+  @Flag(help:"Print in the other form.(ex: platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.4\")")
+  public var printWithPlatform: Bool
   func run() throws {
     if version {
       fputs(Version, stdout)
