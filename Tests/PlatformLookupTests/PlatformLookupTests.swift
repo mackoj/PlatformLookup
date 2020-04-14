@@ -37,8 +37,7 @@ final class PlatformLookupTests: XCTestCase {
         let finalDevice = iPhones!.first!
         XCTAssertEqual(finalDevice, testDevice)
       }
-    }
-    catch { XCTFail(error.localizedDescription) }
+    } catch { XCTFail(error.localizedDescription) }
   }
   func test_findADeviceForLastOSVersion_string() {
     let platform = try? PlatformLookup.findADeviceForLastOSVersion(.iPhone)
@@ -151,8 +150,7 @@ final class PlatformLookupTests: XCTestCase {
       XCTAssertEqual(platforms.count, 1)
       XCTAssertEqual(platforms.first?.devices.first?.name, "iPad Pro (9.7-inch)")
       XCTAssertEqual(platforms.first?.runtime.version, "13.2")
-    }
-    catch { XCTFail(error.localizedDescription) }
+    } catch { XCTFail(error.localizedDescription) }
   }
   func test_findAllDevice() {
     do {
@@ -163,16 +161,14 @@ final class PlatformLookupTests: XCTestCase {
       XCTAssertGreaterThan(platforms.count, 0)
       XCTAssertEqual(platforms.first?.devices.count, 4)
       XCTAssertEqual(platforms.first?.runtime.version, "6.1")
-    }
-    catch { XCTFail(error.localizedDescription) }
+    } catch { XCTFail(error.localizedDescription) }
   }
   func test_errors() {
     // PlatformLookupError.unknowDeviceFamilly
     do {
       let platforms = try PlatformLookup.findAllDeviceNamed("Pikachu 22")
       XCTAssertEqual(platforms.count, 0)
-    }
-    catch {
+    } catch {
       XCTAssertEqual(
         error.localizedDescription,
         PlatformLookup.PlatformLookupError.unknowDevice("Pikachu 22").localizedDescription
@@ -182,16 +178,14 @@ final class PlatformLookupTests: XCTestCase {
     do {
       let platforms = try PlatformLookup.findAllDeviceNamed("iPhone", version: "0.1")
       XCTAssertEqual(platforms.count, 0)
-    }
-    catch {
+    } catch {
       XCTAssertEqual(
         error.localizedDescription,
         PlatformLookup.PlatformLookupError.noRuntimeFound.localizedDescription
       )
     }
     // PlatformLookupError.failedToInitializeDataIsNotValid
-    do { _ = try PlatformLookup(nil) }
-    catch {
+    do { _ = try PlatformLookup(nil) } catch {
       XCTAssertEqual(
         error.localizedDescription,
         PlatformLookup.PlatformLookupError.failedToInitializeDataIsNotValid.localizedDescription

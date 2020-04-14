@@ -11,15 +11,6 @@
         }
       },
       {
-        "package": "CommandParser",
-        "repositoryURL": "https://github.com/mackoj/CommandParser.git",
-        "state": {
-          "branch": null,
-          "revision": "5e8c015893a09d1738da32e2422b3eb62f797d27",
-          "version": "1.0.0"
-        }
-      },
-      {
         "package": "Shell",
         "repositoryURL": "https://github.com/mackoj/Shell.git",
         "state": {
@@ -60,8 +51,8 @@
         "repositoryURL": "https://github.com/mrackwitz/Version.git",
         "state": {
           "branch": null,
-          "revision": "43b1588916820687a056a305720f8f64161ca810",
-          "version": "0.7.2"
+          "revision": "566c69f75a2fed0d13ec15d18aeebfdce57ed616",
+          "version": "0.7.3"
         }
       }
     ]

@@ -1,6 +1,6 @@
 import Foundation
-import SimulatorControl
 import NonEmpty
+import SimulatorControl
 
 extension PlatformLookup {
   /// <#Description#>
@@ -25,12 +25,11 @@ extension PlatformLookup {
       runtimeFilter: filterRuntime(deviceFamily.os, version: version)
     )
     guard let validPlatforms = platforms, validPlatforms.isEmpty == false else {
-      throw (
-        PlatformLookupError.noResultForThisCombinaison(
+      throw
+        (PlatformLookupError.noResultForThisCombinaison(
           device: deviceName,
           runtime: "os: \(deviceFamily.os), version: \(version ?? "<not defined>")"
-        )
-      )
+        ))
     }
     return validPlatforms
   }
@@ -47,12 +46,11 @@ extension PlatformLookup {
       runtimeFilter: filterRuntime(deviceFamily.os, version: version)
     )
     guard let validPlatforms = platforms, validPlatforms.isEmpty == false else {
-      throw (
-        PlatformLookupError.noResultForThisCombinaison(
+      throw
+        (PlatformLookupError.noResultForThisCombinaison(
           device: deviceFamily.rawValue,
           runtime: "os: \(deviceFamily.os), version: \(version ?? "<not defined>")"
-        )
-      )
+        ))
     }
     return validPlatforms
   }
@@ -66,12 +64,11 @@ extension PlatformLookup {
       runtimeFilter: filterRuntime(deviceFamily.os, version: nil)
     ).last
     guard let validPlatform = platform else {
-      throw (
-        PlatformLookupError.noResultForThisCombinaison(
+      throw
+        (PlatformLookupError.noResultForThisCombinaison(
           device: deviceFamily.rawValue,
           runtime: "os: \(deviceFamily.os), version: <not defined>"
-        )
-      )
+        ))
     }
     return validPlatform
   }
@@ -86,8 +83,9 @@ extension PlatformLookup {
     deviceIndex: Int? = nil
   ) throws -> String {
     let device: Device
-    if let idx = deviceIndex { device = platform.devices[idx] }
-    else { device = platform.devices.last! }
+    if let idx = deviceIndex { device = platform.devices[idx] } else {
+      device = platform.devices.last!
+    }
     return "\(deviceFamily.simulatorName),name=\(device.name),OS=\(platform.runtime.version)"
   }
   // MARK: - Private

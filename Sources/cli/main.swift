@@ -1,45 +1,47 @@
-import CommandParser
+import ArgumentParser
 import Foundation
 import PlatformLookup
+import Shell
 
 let Version = "1.0.0"
-let Usage = """
-    SUBCOMMAND [OPTIONS]...
-    EXAMPLES:
-      Check every Swift source under ./Sources for problems:
-        drstring check -i "Sources/**/*.swift"
-      Explain the problem associated with ID `E007`:
-        drstring explain E007
-      Automatically fix formatting issues according to a config file:
-        drstring format --config-file path/to/.drstring.toml
-  """
 
-func performCommand(_ command: PlatformLookupCommand) throws {
-  if command.version {
-    fputs(Version, stdout)
-    exit(EXIT_SUCCESS)
+struct PlatformLookupCLI: ParsableCommand {
+  @Argument(help:"Platform you are looking for. (ex. iPhone)") public var name: String
+  @Option(name:.shortAndLong,help:"Runtime version you are targeting. (ex. 13.2)") public
+    var runtimeVersion: String?
+  @Flag(help:"Show all available options.") public var showAll: Bool
+
+  @Flag(help:"Share info to Bitrise envman.") public var shareToEnvman: Bool
+
+  @Flag(help:"Print tool version.") public var version: Bool
+  func run() throws {
+    if version {
+      fputs(Version, stdout)
+      return
+    }
+    let platforms = try PlatformLookup.findAllDeviceNamed(name, version: runtimeVersion)
+    let platform = platforms.last!
+    let deviceFamily = try PlatformLookup.deviceFamilyFrom(name)
+    let output = try PlatformLookup.format(platform, deviceFamily: deviceFamily)
+    fputs(output + "\n", stdout)
+    if showAll { fputs(platform.description, stdout) }
+    if shareToEnvman {
+      _ = try shell(
+        "envman add --key PLATFORM_LOOKUP_DEVICE_MODEL --value \"\(platform.devices.last!.name)\" 2> /dev/null"
+      )
+      _ = try shell(
+        "envman add --key PLATFORM_LOOKUP_OS_VERSION --value \"\(platform.runtime.version)\" 2> /dev/null"
+      )
+      _ = try shell(
+        "envman add --key PLATFORM_LOOKUP_DEVICE_UDID --value \"\(platform.devices.last!.udid)\" 2> /dev/null"
+      )
+      _ = try shell("envman add --key PLATFORM_LOOKUP_PLATFORM --value \"\(output)\" 2> /dev/null")
+      _ = try shell(
+        "envman add --key PLATFORM_LOOKUP_SIMULATOR_NAME --value \"\(deviceFamily.simulatorName)\" 2> /dev/null"
+      )
+    }
+
   }
-  let platforms = try PlatformLookup.findAllDeviceNamed(
-    command.name,
-    version: command.runtimeVersion
-  )
-  let platform = platforms.last!
-  let deviceFamily = try PlatformLookup.deviceFamilyFrom(command.name)
-  let output = try PlatformLookup.format(platform, deviceFamily: deviceFamily)
-  fputs(output + "\n", stdout)
-  if command.showAll { fputs(platform.description, stdout) }
 }
 
-func exe(_ args: [String]) throws {
-  let command = PlatformLookupCommand.parseOrExit(args)
-  try performCommand(command)
-}
-
-do { try exe(CommandLine.arguments) } catch let error as PlatformLookup.PlatformLookupError {
-  fputs(error.localizedDescription, stderr)
-  exit(EXIT_FAILURE)
-} catch {
-  fputs(Usage, stderr)
-  exit(EXIT_FAILURE)
-}
-exit(EXIT_SUCCESS)
+PlatformLookupCLI.main()

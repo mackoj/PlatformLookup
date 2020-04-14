@@ -11,8 +11,7 @@ final class ShellTests: XCTestCase {
       _ = lsOutput.removeLast()
       XCTAssertEqual(lsOutput, "testFile.txt")
       _ = try shell("rm testFile.txt")
-    }
-    catch { XCTAssert(false, error.localizedDescription) }
+    } catch { XCTAssert(false, error.localizedDescription) }
   }
 
   static var allTests = [("test_SimpleTest", test_SimpleTest)]

@@ -11,14 +11,14 @@ let package = Package(
     .library(name: "PlatformLookup", targets: ["PlatformLookup"]),
   ],
   dependencies: [
+    .package(url: "https://github.com/apple/swift-argument-parser.git", from: "0.0.4"),
     .package(url: "https://github.com/mackoj/AutomaticDescription.git", from: "1.0.0"),
-    .package(url: "https://github.com/mackoj/CommandParser.git", from: "1.0.0"),
-    .package(url: "https://github.com/mackoj/SimulatorControl.git", from: "1.0.0"),
     .package(url: "https://github.com/mackoj/Shell.git", from: "1.0.0"),
-    .package(url: "https://github.com/pointfreeco/swift-nonempty.git", from: "0.2.0")
+    .package(url: "https://github.com/mackoj/SimulatorControl.git", from: "1.0.0"),
+    .package(url: "https://github.com/pointfreeco/swift-nonempty.git", from: "0.2.0"),
   ],
   targets: [
-    .target(name: "cli", dependencies: ["PlatformLookup", "CommandParser", "AutomaticDescription"]),
+    .target(name: "cli", dependencies: ["PlatformLookup", "AutomaticDescription", .product(name: "ArgumentParser", package: "swift-argument-parser")]),
     .target(
       name: "PlatformLookup",
       dependencies: ["SimulatorControl", "Shell", "NonEmpty"]

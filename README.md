@@ -8,10 +8,11 @@ Being able to lift platform information in bitrise in order to simplify maintena
 - PLATFORM_LOOKUP_PLATFORM : Platform parameter for xcodebuild `iOS Simulator,name=iPad Air (3rd generation),OS=13.3`
 - PLATFORM_LOOKUP_SIMULATOR_NAME : Simulator name `iOS Simulator`
 
-It can use the same parameter as `Cli`.
-
 ```shell
-swift sh <(curl https://raw.githubusercontent.com/mackoj/SimulatorControl/master/bitrisePlatformLookup.swift) iPhone
+git clone https://github.com/mackoj/PlatformLookup.git
+cd PlatformLookup
+swift build
+swift run cli iPhone --share-envman
 ```
 
 # Cli 📟

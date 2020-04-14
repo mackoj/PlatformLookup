@@ -1,6 +1,6 @@
 import Foundation
-import SimulatorControl
 import NonEmpty
+import SimulatorControl
 
 /// <#Description#>
 public struct Platform: Equatable, Codable {
