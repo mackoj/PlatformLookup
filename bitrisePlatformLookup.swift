@@ -5,7 +5,7 @@ import PlatformLookup // @mackoj
 import Shell // @mackoj
 import CommandParser // @mackoj
 
-func performCommand(_ command : PlatformLookupCommand) throws {
+func performCommand(_ command : CommandParser) throws {
   let platforms = try PlatformLookup.findAllDeviceNamed(command.name, version: command.runtimeVersion)
   let platform = platforms.last!
   let deviceFamily = try PlatformLookup.deviceFamilyFrom(command.name)
@@ -30,7 +30,7 @@ func performCommand(_ command : PlatformLookupCommand) throws {
 }
 
 func exe(_ args: [String]) throws {
-  let command = PlatformLookupCommand.parseOrExit(args)
+  let command = CommandParser.parseOrExit(args)
   try performCommand(command)
 }
 
