@@ -24,9 +24,7 @@ struct PlatformLookupCLI: ParsableCommand {
     let platform = platforms.last!
     let deviceFamily = try PlatformLookup.deviceFamilyFrom(name)
     let output = try PlatformLookup.format(platform, deviceFamily: deviceFamily)
-    if printWithPlatform {
-      fputs("platform=\"" + output + "\"\n", stdout)
-    } else {
+    if printWithPlatform { fputs("platform=\"" + output + "\"\n", stdout) } else {
       fputs(output + "\n", stdout)
     }
     if showAll { fputs(platform.description, stdout) }
