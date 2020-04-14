@@ -14,6 +14,7 @@ struct PlatformLookupCLI: ParsableCommand {
   @Flag(help:"Share info to Bitrise envman.") public var shareToEnvman: Bool
 
   @Flag(help:"Print tool version.") public var version: Bool
+  @Flag(help:"Print in the other form.") public var printWithPlatform: Bool
   func run() throws {
     if version {
       fputs(Version, stdout)
@@ -23,7 +24,11 @@ struct PlatformLookupCLI: ParsableCommand {
     let platform = platforms.last!
     let deviceFamily = try PlatformLookup.deviceFamilyFrom(name)
     let output = try PlatformLookup.format(platform, deviceFamily: deviceFamily)
-    fputs(output + "\n", stdout)
+    if printWithPlatform {
+      fputs("platform=\"" + output + "\"\n", stdout)
+    } else {
+      fputs(output + "\n", stdout)
+    }
     if showAll { fputs(platform.description, stdout) }
     if shareToEnvman {
       _ = try shell(
