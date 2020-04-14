@@ -1,11 +1,11 @@
 #!/usr/bin/swift sh
 
 import Foundation
-import CommandParser // https://github.com/mackoj/PlatformLookup.git == 0.9.5
-import PlatformLookup
-import Shell
+import PlatformLookup // @mackoj
+import Shell // @mackoj
+import CommandParser // @mackoj
 
-func performCommand(_ command : Command) throws {
+func performCommand(_ command : PlatformLookupCommand) throws {
   let platforms = try PlatformLookup.findAllDeviceNamed(command.name, version: command.runtimeVersion)
   let platform = platforms.last!
   let deviceFamily = try PlatformLookup.deviceFamilyFrom(command.name)
@@ -30,7 +30,7 @@ func performCommand(_ command : Command) throws {
 }
 
 func exe(_ args: [String]) throws {
-  let command = try Command(args)
+  let command = PlatformLookupCommand.parseOrExit(args)
   try performCommand(command)
 }
 

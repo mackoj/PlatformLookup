@@ -2,6 +2,51 @@
   "object": {
     "pins": [
       {
+        "package": "AutomaticDescription",
+        "repositoryURL": "https://github.com/mackoj/AutomaticDescription.git",
+        "state": {
+          "branch": null,
+          "revision": "b7f4bccdc08c6c48ffe4243fd65ada221c760d9d",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "CommandParser",
+        "repositoryURL": "https://github.com/mackoj/CommandParser.git",
+        "state": {
+          "branch": null,
+          "revision": "5e8c015893a09d1738da32e2422b3eb62f797d27",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "Shell",
+        "repositoryURL": "https://github.com/mackoj/Shell.git",
+        "state": {
+          "branch": null,
+          "revision": "1b7dc5e77d707e379266f2959af141c79be2c2df",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "SimulatorControl",
+        "repositoryURL": "https://github.com/mackoj/SimulatorControl.git",
+        "state": {
+          "branch": null,
+          "revision": "f5efccbedeb3bf46b5b86630d54427486ba836e3",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/apple/swift-argument-parser.git",
+        "state": {
+          "branch": null,
+          "revision": "8d31a0905c346a45c87773ad50862b5b3df8dff6",
+          "version": "0.0.4"
+        }
+      },
+      {
         "package": "NonEmpty",
         "repositoryURL": "https://github.com/pointfreeco/swift-nonempty.git",
         "state": {

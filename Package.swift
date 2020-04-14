@@ -8,14 +8,13 @@ let package = Package(
   platforms: [.macOS(.v10_15)],
   products: [
     .executable(name: "cli", targets: ["cli"]),
-    .library(name: "AutomaticDescription", targets: ["AutomaticDescription"]),
-    .library(name: "CommandParser", targets: ["CommandParser"]),
-    .library(name: "SimulatorControl", targets: ["SimulatorControl"]),
-    .library(name: "Shell", targets: ["Shell"]),
     .library(name: "PlatformLookup", targets: ["PlatformLookup"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/mrackwitz/Version.git", from: "0.7.2"),
+    .package(url: "https://github.com/mackoj/AutomaticDescription.git", from: "1.0.0"),
+    .package(url: "https://github.com/mackoj/CommandParser.git", from: "1.0.0"),
+    .package(url: "https://github.com/mackoj/SimulatorControl.git", from: "1.0.0"),
+    .package(url: "https://github.com/mackoj/Shell.git", from: "1.0.0"),
     .package(url: "https://github.com/pointfreeco/swift-nonempty.git", from: "0.2.0")
   ],
   targets: [
@@ -23,10 +22,7 @@ let package = Package(
     .target(
       name: "PlatformLookup",
       dependencies: ["SimulatorControl", "Shell", "NonEmpty"]
-    ), .target(name: "Shell"),
-    .target(name: "SimulatorControl", dependencies: ["Version"]),
-    .target(name: "AutomaticDescription"),
-    .target(name: "CommandParser", dependencies: ["PlatformLookup"]),
+    ),
     .testTarget(
       name: "PlatformLookupTests",
       dependencies: ["PlatformLookup"]

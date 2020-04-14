@@ -1,6 +1,6 @@
+import CommandParser
 import Foundation
 import PlatformLookup
-import CommandParser
 
 let Version = "1.0.0"
 let Usage = """
@@ -14,12 +14,7 @@ let Usage = """
         drstring format --config-file path/to/.drstring.toml
   """
 
-func performCommand(_ command: Command) throws {
-  if command.help {
-    fputs(Usage, stdout)
-    exit(EXIT_SUCCESS)
-  }
-
+func performCommand(_ command: PlatformLookupCommand) throws {
   if command.version {
     fputs(Version, stdout)
     exit(EXIT_SUCCESS)
@@ -36,16 +31,14 @@ func performCommand(_ command: Command) throws {
 }
 
 func exe(_ args: [String]) throws {
-  let command = try Command(args)
+  let command = PlatformLookupCommand.parseOrExit(args)
   try performCommand(command)
 }
 
-do { try exe(Array(CommandLine.arguments.dropFirst())) }
-catch let error as PlatformLookup.PlatformLookupError {
+do { try exe(CommandLine.arguments) } catch let error as PlatformLookup.PlatformLookupError {
   fputs(error.localizedDescription, stderr)
   exit(EXIT_FAILURE)
-}
-catch {
+} catch {
   fputs(Usage, stderr)
   exit(EXIT_FAILURE)
 }
