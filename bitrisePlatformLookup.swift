@@ -12,19 +12,19 @@ func performCommand(_ command : PlatformLookupCommand) throws {
   let output = try PlatformLookup.format(platform, deviceFamily: deviceFamily)
 
   _ = try shell(
-    "envman add --key PLATFORM_LOOKUP_DEVICE_MODEL --value \"\(platform.devices.last!.name)\""
+    "envman add --key PLATFORM_LOOKUP_DEVICE_MODEL --value \"\(platform.devices.last!.name)\" 2> /dev/null"
   )
   _ = try shell(
-    "envman add --key PLATFORM_LOOKUP_OS_VERSION --value \"\(platform.runtime.version)\""
+    "envman add --key PLATFORM_LOOKUP_OS_VERSION --value \"\(platform.runtime.version)\" 2> /dev/null"
   )
   _ = try shell(
-    "envman add --key PLATFORM_LOOKUP_DEVICE_UDID --value \"\(platform.devices.last!.udid)\""
+    "envman add --key PLATFORM_LOOKUP_DEVICE_UDID --value \"\(platform.devices.last!.udid)\" 2> /dev/null"
   )
   _ = try shell(
-    "envman add --key PLATFORM_LOOKUP_PLATFORM --value \"\(output)\""
+    "envman add --key PLATFORM_LOOKUP_PLATFORM --value \"\(output)\" 2> /dev/null"
   )
   _ = try shell(
-    "envman add --key PLATFORM_LOOKUP_SIMULATOR_NAME --value \"\(deviceFamily.simulatorName)\""
+    "envman add --key PLATFORM_LOOKUP_SIMULATOR_NAME --value \"\(deviceFamily.simulatorName)\" 2> /dev/null"
   )
   fputs(output + "\n", stdout)
 }
