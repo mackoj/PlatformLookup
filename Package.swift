@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
   name: "PlatformLookup",
-  platforms: [.macOS(.v10_14)],
+  platforms: [.macOS(.v10_15)],
   products: [
     .executable(name: "cli", targets: ["cli"]),
     .library(name: "AutomaticDescription", targets: ["AutomaticDescription"]),
