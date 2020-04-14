@@ -4,13 +4,13 @@ init:
 build:
 	swift build
 
-format:
-	swift-format -m format --configuration .swift-format -r -i Sources/**/*.swift
-	swift-format -m format --configuration .swift-format -r -i Tests/**/*.swift
-
-lint:
-	swift-format -m lint --configuration .swift-format -r -i Sources/**/*.swift
-	swift-format -m lint --configuration .swift-format -r -i Tests/**/*.swift
+# format:
+# 	swift-format -m format --configuration .swift-format -r -i Sources/**/*.swift
+# 	swift-format -m format --configuration .swift-format -r -i Tests/**/*.swift
+#
+# lint:
+# 	swift-format -m lint --configuration .swift-format -r -i Sources/**/*.swift
+# 	swift-format -m lint --configuration .swift-format -r -i Tests/**/*.swift
 
 generate-enum-properties:
 	generate-enum-properties Sources/**/*.swift

@@ -19,10 +19,10 @@ if ! [ -x "$(command -v swift-format)" ]; then
   cp /tmp/__hawkci__/swift-format/.build/release/swift-format /usr/local/bin/swift-format
   cp /tmp/__hawkci__/swift-format/.build/release/generate-pipeline /usr/local/bin/generate-pipeline
 else
-  echo "Linting..."
-  git diff --diff-filter=d --cached --name-only | grep -E 'Sources.*.(swift)$' | xargs -I{} swift-format -m lint --configuration .swift-format {}
+  # echo "Linting..."
+  # git diff --diff-filter=d --cached --name-only | grep -E 'Sources.*.(swift)$' | xargs -I{} swift-format -m lint --configuration .swift-format {}
   echo "Auto-Formatting..."
-  git diff --diff-filter=d --cached --name-only | grep -E 'Sources.*.(swift)$' | xargs -I{} swift-format -m format -r --configuration .swift-format -i {}
+  git diff --diff-filter=d --cached --name-only | grep -E 'Sources.*.(swift)$' | xargs -I{} swift-format -m format -r -i {}
   echo "You might need to re-commit to commit the updated formmated code"
 fi
 
