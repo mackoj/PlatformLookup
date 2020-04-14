@@ -23,7 +23,6 @@ else
   # git diff --diff-filter=d --cached --name-only | grep -E 'Sources.*.(swift)$' | xargs -I{} swift-format -m lint --configuration .swift-format {}
   echo "Auto-Formatting..."
   git diff --diff-filter=d --cached --name-only | grep -E 'Sources.*.(swift)$' | xargs -I{} swift-format -m format -r -i {}
-  echo "You might need to re-commit to commit the updated formmated code"
 fi
 
 if ! [ -x "$(command -v generate-enum-properties)" ]; then

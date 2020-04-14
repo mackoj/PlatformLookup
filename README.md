@@ -20,25 +20,40 @@ swift run cli iPhone --share-to-envman
 You can use the cli to find the platform you need by passing the device name or juste the device family you can optionnaly set the os version you are looking for.
 
 ```shell
-./cli iphone
+swift run cli iphone
 iOS Simulator,name=iPhone 11 Pro Max,OS=13.3
 ```
 
 ```shell
-./cli "iPad Air (3rd generation)"
+swift run cli "iPad Air (3rd generation)"
 iOS Simulator,name=iPad Air (3rd generation),OS=13.3
 ```
 
 ```shell
-./cli watch
+swift run cli watch
 watchOS Simulator,name=Apple Watch Series 5 - 44mm,OS=6.1.1
 ```
 
 ```shell
-./cli tv -v 13.3
+swift run cli tv -v 13.3
 tvOS Simulator,name=Apple TV 4K (at 1080p),OS=13.3
 ```
+`--help`
+```
+USAGE: platform-lookup-cli <name> [--runtime-version <runtime-version>] [--show-all] [--share-to-envman] [--version] [--print-with-platform]
 
+ARGUMENTS:
+  <name>                  Platform you are looking for. (ex. iPhone)
+
+OPTIONS:
+  -r, --runtime-version <runtime-version>
+                          Runtime version you are targeting. (ex. 13.2)
+  --show-all              Show all available options.
+  --share-to-envman       Share info to Bitrise envman.
+  --version               Print tool version.
+  --print-with-platform   Print in the other form.(ex: platform="iOS Simulator,name=iPhone 11 Pro Max,OS=13.4")
+  -h, --help              Show help information.
+```
 # PlatformLookup 🔎
 
 This package help to find/filter/sort all devices and runtimes available in xcrun simctl.
