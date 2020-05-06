@@ -4,10 +4,10 @@ init:
 build:
 	swift build
 
-# format:
-# 	swift-format -m format --configuration .swift-format -r -i Sources/**/*.swift
-# 	swift-format -m format --configuration .swift-format -r -i Tests/**/*.swift
-#
+ format:
+ 	swift-format -m format --configuration .swift-format -r -i Sources/**/*.swift
+ 	swift-format -m format --configuration .swift-format -r -i Tests/**/*.swift
+
 # lint:
 # 	swift-format -m lint --configuration .swift-format -r -i Sources/**/*.swift
 # 	swift-format -m lint --configuration .swift-format -r -i Tests/**/*.swift
@@ -34,7 +34,7 @@ install-swift-format:
 	rm -rf /tmp/__hawkci__/swift-format
 	rm -f /usr/local/bin/swift-format
 	rm -f /usr/local/bin/generate-pipeline
-	git clone --single-branch --branch swift-5.1-branch https://github.com/apple/swift-format.git /tmp/__hawkci__/swift-format
+	git clone --single-branch --branch swift-5.2-branch https://github.com/apple/swift-format.git /tmp/__hawkci__/swift-format
 	cd /tmp/__hawkci__/swift-format
 	swift build -c release
 	cp /tmp/__hawkci__/swift-format/.build/release/swift-format /usr/local/bin/swift-format

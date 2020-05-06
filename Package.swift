@@ -26,7 +26,11 @@ let package = Package(
     .testTarget(
       name: "PlatformLookupTests",
       dependencies: ["PlatformLookup"]
-    ), .testTarget(name: "ShellTests", dependencies: ["Shell"]),
+    ),
+  .testTarget(
+    name: "CLITests",
+    dependencies: ["cli"]
+  )
   ],
   swiftLanguageVersions: [.v5]
 )
