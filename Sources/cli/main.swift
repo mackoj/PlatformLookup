@@ -56,6 +56,7 @@ struct PlatformLookupCLI: ParsableCommand {
   }
   
   func run() throws {
+    if shareToEnvman, allPlatform { throw(PlatformLookup.PlatformLookupError.impossibleConfiguration("shareToEnvman(\(shareToEnvman) and allPlatform(\(allPlatform) because shareToEnvman will get only the last platform")) }
     if allPlatform {
       for aDeviceFamily in PlatformLookup.DeviceFamily.allCases {
         try displayPlatformInformation(aDeviceFamily.rawValue)
