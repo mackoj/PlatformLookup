@@ -11,7 +11,6 @@ extension PlatformLookup {
     case unknowDevice(String)
     case unknowRuntime(String)
     case impossibleConfiguration(String)
-    
     /// A localized message describing what error occurred.
     public var errorDescription: String? {
       switch self {
@@ -43,8 +42,11 @@ extension PlatformLookup {
         return NSLocalizedString("Unknown device: \(device)", comment: "unknown device")
       case .unknowRuntime(let runtime):
         return NSLocalizedString("Unknown runtime: \(runtime)", comment: "Unknown runtime")
-        case .impossibleConfiguration(let configuration):
-          return NSLocalizedString("This configuration can't work: \(configuration)", comment: "This configuration can't work")
+      case .impossibleConfiguration(let configuration):
+        return NSLocalizedString(
+          "This configuration can't work: \(configuration)",
+          comment: "This configuration can't work"
+        )
       }
     }
     /// A localized message describing the reason for the failure.
