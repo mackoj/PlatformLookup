@@ -11,7 +11,7 @@ let package = Package(
     .library(name: "PlatformLookup", targets: ["PlatformLookup"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-argument-parser.git", from: "0.0.4"),
+    .package(url: "https://github.com/apple/swift-argument-parser.git", from: "0.0.5"),
     .package(url: "https://github.com/mackoj/AutomaticDescription.git", from: "1.0.0"),
     .package(url: "https://github.com/mackoj/Shell.git", from: "1.0.0"),
     .package(url: "https://github.com/mackoj/SimulatorControl.git", from: "1.0.0"),

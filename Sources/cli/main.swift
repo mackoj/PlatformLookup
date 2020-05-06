@@ -3,24 +3,27 @@ import Foundation
 import PlatformLookup
 import Shell
 
-let Version = "1.0.0"
-
 struct PlatformLookupCLI: ParsableCommand {
-  @Argument(help:"Platform you are looking for. (ex. iPhone)") public var name: String
-  @Option(name:.shortAndLong,help:"Runtime version you are targeting. (ex. 13.2)") public
-    var runtimeVersion: String?
-  @Flag(help:"Show all available options.") public var showAll: Bool
+  
+  static var configuration = CommandConfiguration(abstract: "A utility for getting simulator list.", version: "1.0.0")
 
-  @Flag(help:"Share info to Bitrise envman.") public var shareToEnvman: Bool
+  
+  @Argument(help:"Platform you are looking for. (ex. iPhone)")
+  public var name: String
+  
+  @Option(name:.shortAndLong,help:"Runtime version you are targeting. (ex. 13.2)")
+  public var runtimeVersion: String?
+  
+  @Flag(help:"Show all available options.")
+  public var showAll: Bool
 
-  @Flag(help:"Print tool version.") public var version: Bool
+  @Flag(help:"Share info to Bitrise envman.")
+  public var shareToEnvman: Bool
+
   @Flag(help:"Print in the other form.(ex: platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.4\")")
   public var printWithPlatform: Bool
+  
   func run() throws {
-    if version {
-      fputs(Version, stdout)
-      return
-    }
     let platforms = try PlatformLookup.findAllDeviceNamed(name, version: runtimeVersion)
     let platform = platforms.last!
     let deviceFamily = try PlatformLookup.deviceFamilyFrom(name)
