@@ -38,6 +38,15 @@ watchOS Simulator,name=Apple Watch Series 5 - 44mm,OS=6.1.1
 swift run cli tv -v 13.3
 tvOS Simulator,name=Apple TV 4K (at 1080p),OS=13.3
 ```
+
+```shell
+swift run cli --all-platform all
+iOS Simulator,name=iPhone SE (2nd generation),OS=13.4.1
+iOS Simulator,name=iPad Air (3rd generation),OS=13.4.1
+tvOS Simulator,name=Apple TV 4K (at 1080p),OS=13.4
+watchOS Simulator,name=Apple Watch Series 5 - 44mm,OS=6.2
+```
+
 `--help`
 ```
 USAGE: platform-lookup-cli <name> [--runtime-version <runtime-version>] [--show-all] [--share-to-envman] [--version] [--print-with-platform]
