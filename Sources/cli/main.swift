@@ -13,10 +13,10 @@ struct PlatformLookupCLI: ParsableCommand {
   @Option(name:.shortAndLong,help:"Runtime version you are targeting. (ex. 13.2)")
   public var runtimeVersion: String?
   
-  @Flag(help:"Show all available options.(ex: swift run cli --all-platform all)")
+  @Flag(help:"Show all devices for a runtime")
   public var showAll: Bool
 
-  @Flag(help:"Show all last platforms.")
+  @Flag(help:"Show all platforms. (ex: swift run cli --all-platform all)")
   public var allPlatform: Bool
 
   @Flag(help:"Share info to Bitrise envman.")
