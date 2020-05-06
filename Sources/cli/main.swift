@@ -6,7 +6,6 @@ import Shell
 struct PlatformLookupCLI: ParsableCommand {
   
   static var configuration = CommandConfiguration(abstract: "A utility for getting simulator list.", version: "1.0.0")
-
   
   @Argument(help:"Platform you are looking for. (ex. iPhone)")
   public var name: String
