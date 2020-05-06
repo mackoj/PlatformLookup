@@ -11,7 +11,6 @@ Being able to lift platform information in bitrise in order to simplify maintena
 ```shell
 git clone https://github.com/mackoj/PlatformLookup.git
 cd PlatformLookup
-swift build
 swift run cli iPhone --share-to-envman
 ```
 
