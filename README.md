@@ -1,3 +1,5 @@
+![Swift CI](https://github.com/mackoj/PlatformLookup/workflows/Swift%20CI/badge.svg?event=push)
+
 # Bitrise Support
 
 Being able to lift platform information in bitrise in order to simplify maintenance.
