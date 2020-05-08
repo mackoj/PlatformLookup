@@ -1,4 +1,4 @@
-![Swift CI](https://github.com/mackoj/PlatformLookup/workflows/Swift%20CI/badge.svg?branch=master&event=push)
+![Swift CI](https://github.com/mackoj/PlatformLookup/workflows/Swift%20CI/badge.svg?event=push)
 
 # Bitrise Support
 
