@@ -17,7 +17,7 @@ jobs:
         run: make format
       - uses: stefanzweifel/git-auto-commit-action@v4.1.6
         with:
-          commit_message: Run swift-format
+          commit_message: Update Formatting with swift-format
           branch: 'master'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PlatformLookupToken }}

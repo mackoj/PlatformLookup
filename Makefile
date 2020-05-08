@@ -1,3 +1,7 @@
+# $(eval PLATFORM_IOS = $(shell swift run cli "iphone se"))
+# $(eval PLATFORM_TVOS = $(shell swift run cli "Apple TV 4K"))
+# @echo "${PLATFORM_IOS}"
+
 init:
 	git config core.hooksPath .githooks
 	
@@ -17,7 +21,7 @@ test-swift:
 		--enable-pubgrub-resolver \
 		--enable-test-discovery \
 		--parallel
-		
+
 generate-enum-properties:
 	generate-enum-properties Sources/**/*.swift
 
@@ -36,5 +40,3 @@ format:
 	swift format --in-place --configuration .swift-format --recursive .
 
 .PHONY: format
-	$(eval PLATFORM_IOS = $(shell swift run cli "iphone se"))
-	$(eval PLATFORM_TVOS = $(shell swift run cli "Apple TV 4K"))
