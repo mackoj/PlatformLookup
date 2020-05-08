@@ -1,6 +1,5 @@
-import XCTest
-
 import SimulatorControlTests
+import XCTest
 
 var tests = [XCTestCaseEntry]()
 tests += PlatformLookupTests.allTests()

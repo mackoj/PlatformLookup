@@ -18,15 +18,15 @@ let package = Package(
     .package(url: "https://github.com/pointfreeco/swift-nonempty.git", from: "0.2.0"),
   ],
   targets: [
-    .target(name: "cli", dependencies: ["PlatformLookup", "AutomaticDescription", .product(name: "ArgumentParser", package: "swift-argument-parser")]),
     .target(
-      name: "PlatformLookup",
-      dependencies: ["SimulatorControl", "Shell", "NonEmpty"]
-    ),
-    .testTarget(
-      name: "PlatformLookupTests",
-      dependencies: ["PlatformLookup"]
-    ), .testTarget(name: "ShellTests", dependencies: ["Shell"]),
+      name: "cli",
+      dependencies: [
+        "PlatformLookup", "AutomaticDescription",
+        .product(name: "ArgumentParser", package: "swift-argument-parser"),
+      ]
+    ), .target(name: "PlatformLookup", dependencies: ["SimulatorControl", "Shell", "NonEmpty"]),
+    .testTarget(name: "PlatformLookupTests", dependencies: ["PlatformLookup"]),
+    .testTarget(name: "ShellTests", dependencies: ["Shell"]),
   ],
   swiftLanguageVersions: [.v5]
 )

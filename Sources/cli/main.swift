@@ -4,36 +4,28 @@ import PlatformLookup
 import Shell
 
 struct PlatformLookupCLI: ParsableCommand {
-  
-  static var configuration = CommandConfiguration(abstract: "A utility for getting simulator list.", version: "1.0.0")
-  
-  @Argument(help:"Platform you are looking for. (ex. iPhone)")
-  public var name: String
-  
-  @Option(name:.shortAndLong,help:"Runtime version you are targeting. (ex. 13.2)")
-  public var runtimeVersion: String?
-  
-  @Flag(help:"Show all devices for a runtime")
-  public var showAll: Bool
+  static var configuration = CommandConfiguration(
+    abstract: "A utility for getting simulator list.",
+    version: "1.0.0"
+  )
+  @Argument(help:"Platform you are looking for. (ex. iPhone)") public var name: String
+  @Option(name:.shortAndLong,help:"Runtime version you are targeting. (ex. 13.2)") public
+    var runtimeVersion: String?
+  @Flag(help:"Show all devices for a runtime") public var showAll: Bool
 
-  @Flag(help:"Show all platforms. (ex: swift run cli --all-platform all)")
-  public var allPlatform: Bool
+  @Flag(help:"Show all platforms. (ex: swift run cli --all-platform all)") public var allPlatform:
+    Bool
 
-  @Flag(help:"Share info to Bitrise envman.")
-  public var shareToEnvman: Bool
+  @Flag(help:"Share info to Bitrise envman.") public var shareToEnvman: Bool
 
   @Flag(help:"Print in the other form.(ex: platform=\"iOS Simulator,name=iPhone 11 Pro Max,OS=13.4\")")
   public var printWithPlatform: Bool
-  
-  func displayPlatformInformation(_ inputName : String) throws {
+  func displayPlatformInformation(_ inputName: String) throws {
     let platforms = try PlatformLookup.findAllDeviceNamed(inputName, version: runtimeVersion)
     let platform = platforms.last!
     let deviceFamily = try PlatformLookup.deviceFamilyFrom(inputName)
     let output = try PlatformLookup.format(platform, deviceFamily: deviceFamily)
-    
-    if printWithPlatform {
-      fputs("platform=\"" + output + "\"\n", stdout)
-    } else {
+    if printWithPlatform { fputs("platform=\"" + output + "\"\n", stdout) } else {
       fputs(output + "\n", stdout)
     }
     if showAll { fputs(platform.description, stdout) }
@@ -53,16 +45,18 @@ struct PlatformLookupCLI: ParsableCommand {
       )
     }
   }
-  
   func run() throws {
-    if shareToEnvman, allPlatform { throw(PlatformLookup.PlatformLookupError.impossibleConfiguration("shareToEnvman(\(shareToEnvman) and allPlatform(\(allPlatform) because shareToEnvman will get only the last platform")) }
+    if shareToEnvman, allPlatform {
+      throw
+        (PlatformLookup.PlatformLookupError.impossibleConfiguration(
+          "shareToEnvman(\(shareToEnvman) and allPlatform(\(allPlatform) because shareToEnvman will get only the last platform"
+        ))
+    }
     if allPlatform {
       for aDeviceFamily in PlatformLookup.DeviceFamily.allCases {
         try displayPlatformInformation(aDeviceFamily.rawValue)
       }
-    } else {
-      try displayPlatformInformation(name)
-    }
+    } else { try displayPlatformInformation(name) }
   }
 }
 

@@ -1,22 +1,9 @@
-# Generate a random number.
-# This is not run initially.
-GENERATE_ID = $(shell od -vAn -N2 -tu2 < /dev/urandom)
-
-# Generate a random number, and assign it to MY_ID
-# This is not run initially.
-SET_ID = $(eval MY_ID=$(GENERATE_ID))
-
-
-PLATFORM_IOS = iOS Simulator,name=iPhone 11 Pro Max,OS=13.4.1
-PLATFORM_MACOS = macOS
-PLATFORM_TVOS = tvOS Simulator,name=Apple TV 4K (at 1080p),OS=13.4
-
 init:
 	git config core.hooksPath .githooks
 	
 default: test-all
 
-test-all: test-swift test-macos
+test: test-swift test-macos
 
 test-macos:
 	swift package generate-xcodeproj
@@ -46,7 +33,8 @@ install-generate-enum-properties:
 	make install
 
 format:
-	swift format --in-place --recursive .
+	swift format --in-place --configuration .swift-format --recursive .
 
 .PHONY: format
-
+	$(eval PLATFORM_IOS = $(shell swift run cli "iphone se"))
+	$(eval PLATFORM_TVOS = $(shell swift run cli "Apple TV 4K"))
