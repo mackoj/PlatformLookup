@@ -8,7 +8,7 @@ struct PlatformLookupCLI: ParsableCommand {
     abstract: "A utility for getting simulator list.",
     version: "1.0.0"
   )
-  @Argument(help:"Platform you are looking for. (ex. iPhone)") public var name: String
+  @Argument(help:"Platform you are looking for. (ex. iPhone or \"iPad Air (3rd generation)\")") public var name: String
   @Option(name:.shortAndLong,help:"Runtime version you are targeting. (ex. 13.2)") public
     var runtimeVersion: String?
   @Flag(help:"Show all devices for a runtime") public var showAll: Bool
