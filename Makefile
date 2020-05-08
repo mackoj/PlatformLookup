@@ -1,27 +1,22 @@
+# Generate a random number.
+# This is not run initially.
+GENERATE_ID = $(shell od -vAn -N2 -tu2 < /dev/urandom)
+
+# Generate a random number, and assign it to MY_ID
+# This is not run initially.
+SET_ID = $(eval MY_ID=$(GENERATE_ID))
+
+
+PLATFORM_IOS = iOS Simulator,name=iPhone 11 Pro Max,OS=13.4.1
+PLATFORM_MACOS = macOS
+PLATFORM_TVOS = tvOS Simulator,name=Apple TV 4K (at 1080p),OS=13.4
+
 init:
 	git config core.hooksPath .githooks
+	
+default: test-all
 
-build:
-	swift build
-
-format:
-	swift-format -m format --configuration .swift-format -r -i Sources/**/*.swift
-	swift-format -m format --configuration .swift-format -r -i Tests/**/*.swift
-#
-# lint:
-# 	swift-format -m lint --configuration .swift-format -r -i Sources/**/*.swift
-# 	swift-format -m lint --configuration .swift-format -r -i Tests/**/*.swift
-
-generate-enum-properties:
-	generate-enum-properties Sources/**/*.swift
-
-gitignore-flush:
-	git rm -r --cached .
-	git add .
-	git commit -m ".gitignore flush"
-
-test-swift:
-	swift test
+test-all: test-swift test-macos
 
 test-macos:
 	swift package generate-xcodeproj
@@ -30,15 +25,19 @@ test-macos:
 		-scheme PlatformLookup-Package \
 		-destination platform="macOS" \
 
-install-swift-format:
-	rm -rf /tmp/__hawkci__/swift-format
-	rm -f /usr/local/bin/swift-format
-	rm -f /usr/local/bin/generate-pipeline
-	git clone --single-branch --branch swift-5.1-branch https://github.com/apple/swift-format.git /tmp/__hawkci__/swift-format
-	cd /tmp/__hawkci__/swift-format
-	swift build -c release
-	cp /tmp/__hawkci__/swift-format/.build/release/swift-format /usr/local/bin/swift-format
-	cp /tmp/__hawkci__/swift-format/.build/release/generate-pipeline /usr/local/bin/generate-pipeline
+test-swift:
+	swift test \
+		--enable-pubgrub-resolver \
+		--enable-test-discovery \
+		--parallel
+		
+generate-enum-properties:
+	generate-enum-properties Sources/**/*.swift
+
+gitignore-flush:
+	git rm -r --cached .
+	git add .
+	git commit -m ".gitignore flush"
 
 install-generate-enum-properties:
 	echo "Installing swift-enum-properties"
@@ -46,4 +45,8 @@ install-generate-enum-properties:
 	cd /tmp/__hawkci__/swift-enum-properties
 	make install
 
-test: test-swift test-macos
+format:
+	swift format --in-place --recursive .
+
+.PHONY: format
+
